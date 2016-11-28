@@ -1,0 +1,73 @@
+<?php
+echo "<meta charset='koi8-r'>";
+// Функция вывода формы ввода.
+function show_form()
+{
+$result = $a + $b;
+echo '<html>';
+echo '<head>';
+echo '<title>Сумматор</title>';
+echo '</head>';
+echo '<body>';
+echo '<form action="sum.php" method="post">';
+echo '<input type="text" name="a" />';
+echo '+';
+echo '<input type="text" name="b" />';
+echo '<input type="submit" value="=" />';
+//echo '<b>$result</b>';
+//echo '<input type="text" value=5>';
+echo '</form>';
+echo '</body>';
+echo '</html>';
+}
+// Функция вывода результата.
+function show_result($a, $b)
+{
+$result = $a + $b;
+echo '<html>';
+echo '<head>';
+echo '<title>Сумматор</title>';
+echo '</head>';
+echo '<body>';
+echo '<p>';
+echo "$a + $b = <b>$result</b>";
+echo '</p>';
+echo '<p>';
+echo '<a href="sum.php">Хочу суммировать еще</a>';
+echo '</p>';
+echo '</body>';
+echo '</html>';
+}
+function show($a, $b)
+{
+echo '<html>';
+echo '<head>';
+echo '<title>sum</title>';
+echo '</head>';
+echo '<body>';
+echo '<form action="sum.php" method="post">';
+echo '<input type="text" value='.$a.' />';
+echo '+';
+echo '<input type="text" value='.$b.' />';
+echo '<input type="submit" value="=" />';
+//echo '<b>$result</b>';
+echo '<input type="text" value='.($a+$b).'>';
+echo '</form>';
+echo '</body>';
+echo '</html>';
+}
+
+// Точка входа.
+// Показываем результат операции или форму ввода.
+if (isset($_POST['a']) && isset($_POST['b']))
+{
+show($_POST['a'], $_POST['b']);
+//show_form($_POST['a'], $_POST['b']);
+
+
+}
+else
+{
+show_form();
+}
+?>

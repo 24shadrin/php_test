@@ -1,0 +1,55 @@
+<?php
+// Функция вывода формы отправки файла.
+function print_form()
+{
+echo '<form method="post" enctype="multipart/form-data">';
+echo '<input type="file" name="text" />';
+echo '<br/>';
+echo '<input type="submit" value="Загрузить файл!" />';
+echo '</form>';
+}
+// Функция вывода содержимого файла.
+function print_file($file)
+{
+echo '<a href="index.php">Еще раз</a>';
+echo '<br/><br/>';
+if ($file['name'] == '')
+{
+echo 'Файл не выбран!';
+return;
+
+}
+$lines = file($file['tmp_name']);
+$i = 1;
+echo "<b>" . $file['name'] . "</b>";
+echo "<br/><br/>";
+echo "<table>";
+foreach ($lines as $s)
+{
+echo "<tr><td><small>$i:</small></td><td>$s</td></tr>";
+$i++;
+}
+echo "</table>";
+}
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=windows-
+1251">
+<title>Загрузка файла на сервер</title>
+</head>
+<body>
+<h1>Пример загрузки файла на сервер</h1>
+<?php
+if (isset($_FILES['text']))
+{
+print_file($_FILES['tmp_name']);
+}
+else
+{
+print_form();
+}
+?>
+</body>
+</html>
