@@ -13,7 +13,7 @@ $handle = opendir('small');
 					if ($file != '.' && $file != '..')
 					{
 						$fpath = "small/"."$file"; 
-						echo "<img src=$fpath>";
+						echo "<a href=big/$file><img src=$fpath>";
 					}
 						closedir($handle);
 						echo "<br>";
