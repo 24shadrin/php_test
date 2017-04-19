@@ -1,43 +1,46 @@
 <?php
 //создаем timelapse
 
-//echo "hello";
+
 
 //$path = '/home/pi/beward/penta/2017-04-18/beward_penta/1/';
 $path = '/var/www/sm/timelapse/penta/';
 $spath = 'penta/';
 
-$i = 1;
+$i = 0;
 $limit = 5;
 
 //$list = scandir($path);
-$list = opendir($path);
+if ($list = opendir($path))
+{
 if ($list != false)
 {
-//	$i = 1;
-	while((($file = readdir($list)) !== false) && (($file = readdir($list)) !='.') && (($file = readdir($list)) !='..') && ($i < $limit))
-//	while((($file = readdir($list)) !== false) &&(($file = readdir($list)) !=".") && (($file = readdir($list)) !=".."))
-	{//	$i=$i+1;
-				echo  $file;
-				$picture = $spath . $file;
-//		echo "<img src='$picture'>";
-//      echo "<br>";
-//	  echo "$file";
-	  echo "\n";
-		$i++;
-	}
 
+	while((($file = readdir($list)) !== false) && ($i < $limit))
+	{
+		if (($file != '.') && ($file != '..'))
+		{
+				$files[] = $file;
+				
+				$picture = $spath . $file;
+
+		}$i++;
+	}
+	
+	sort($files);
+				foreach($files as $value)
+				{				
+			$picture = $spath . $value;
+			echo "<img src='$picture' width='300' height='240' />";
+				}
 closedir($list);
 }
+}
+else 
+{
+	echo "folder with content not found";
+}
 
-//var_dump($list);
-
-//foreach ($list as $value)
-
-//if ($value == "." || $value=="..")
-
-//echo $value . "\n";
-//echo "<br>";
 
 
 ?>
