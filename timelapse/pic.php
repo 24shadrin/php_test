@@ -8,32 +8,47 @@ function show_picture($lim)
 $path = '/var/www/sm/timelapse/penta/';
 $spath = 'penta/';
 
-$i = 0;
-//$limit = 5;
 
-//$list = scandir($path);
 if ($list = opendir($path))
 {
 if ($list != false)
 {
 
-	while((($file = readdir($list)) !== false) && ($i < $lim))
+	while((($file = readdir($list)) !== false))	
+
 	{
 		if (($file != '.') && ($file != '..'))
 		{
 				$files[] = $file;
-				
-				$picture = $spath . $file;
 
-		}$i++;
+		}
+//		$i++;
 	}
 	
 	sort($files);
-				foreach($files as $value)
-				{				
+//	var_dump($files);
+if ($lim == 'all') 
+{
+			foreach($files as $value)
+			{			
 			$picture = $spath . $value;
 			echo "<img src='$picture' width='300' height='240' />";
+			}
+echo "<br>";
+echo '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
+			
+}
+else
+{
+				for($i = 0; $i < $lim; $i++)
+				{				
+			$picture = $spath . $files[$i];
+				echo "<img src='$picture' width='300' height='240' />";
 				}
+echo "<br>";
+echo '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';	
+				
+}
 closedir($list);
 }
 }
@@ -55,7 +70,7 @@ echo "<option value='5'> 5 </option>";
 echo "<option value='6'> 6 </option>";
 echo "<option value='10'> 10 </option>";
 echo "<option value='15'> 15 </option>";
-echo "<option value='1000'> все </option>";
+echo "<option value='all'> все </option>";
 echo '<input type="submit" value="применить" />';
 echo "</select>";
 echo "</form>";
@@ -71,6 +86,8 @@ else{
 print_form();
 }
 
+
+//show_picture($limit);
 
 
 
