@@ -2,11 +2,12 @@
 //создаем timelapse
 
 
-function show_picture($lim)
+function show_picture($lim,$cf)
 {
 //$path = '/home/pi/beward/penta/2017-04-18/beward_penta/1/';
-$path = '/var/www/sm/timelapse/penta/';
-$spath = 'penta/';
+$path = '/var/www/sm/timelapse/penta2/';
+$spath = 'penta2/';
+$back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
 
 
 if ($list = opendir($path))
@@ -22,8 +23,9 @@ if ($list != false)
 				$files[] = $file;
 
 		}
-//		$i++;
+
 	}
+
 	
 	sort($files);
 //	var_dump($files);
@@ -35,7 +37,7 @@ if ($lim == 'all')
 			echo "<img src='$picture' width='300' height='240' />";
 			}
 echo "<br>";
-echo '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
+echo $back_url;
 			
 }
 else
@@ -46,7 +48,8 @@ else
 				echo "<img src='$picture' width='300' height='240' />";
 				}
 echo "<br>";
-echo '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';	
+echo $back_url;
+
 				
 }
 closedir($list);
@@ -76,6 +79,30 @@ echo "</select>";
 echo "</form>";
 }
 
+function info_folder()
+{
+$path = '/var/www/sm/timelapse/penta2/';
+
+if ($list = opendir($path))
+{
+if ($list != false)
+{
+
+	while((($file = readdir($list)) !== false))	
+
+	{
+		if (($file != '.') && ($file != '..'))
+		{
+				$files[] = $file;
+
+		}
+
+	}
+}
+$x = count($files);
+echo "в папке " . $x . " элемента";
+}
+}
 //точка входа в программу
 
 if (isset($_POST['limit']))
@@ -84,10 +111,8 @@ if (isset($_POST['limit']))
 }
 else{
 print_form();
+info_folder();
 }
-
-
-//show_picture($limit);
 
 
 
