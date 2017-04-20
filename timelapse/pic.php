@@ -34,7 +34,7 @@ if ($lim == 'all')
 			foreach($files as $value)
 			{			
 			$picture = $spath . $value;
-			echo "<img src='$picture' width='300' height='240' />";
+			echo "<img src='$picture' width=24% />";
 			}
 echo "<br>";
 echo $back_url;
@@ -45,7 +45,7 @@ else
 				for($i = 0; $i < $lim; $i++)
 				{				
 			$picture = $spath . $files[$i];
-				echo "<img src='$picture' width='300' height='240' />";
+				echo "<img src='$picture' width=24% />";
 				}
 echo "<br>";
 echo $back_url;
@@ -103,11 +103,67 @@ $x = count($files);
 echo "в папке " . $x . " элемента";
 }
 }
+
+function show_pic($lim)
+{
+$path = '/var/www/sm/timelapse/penta2/';
+$spath = 'penta2/';
+$back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
+
+
+if ($list = scandir($path, 1))
+{
+if ($list != false)
+{
+
+	
+		foreach ($list as $value)
+	{
+		if (($value != '.') && ($value != '..'))
+		{
+				$files[] = $value;
+
+		}
+
+	}
+
+//var_dump($files);
+//	sort($files);
+//	var_dump($files);
+/*
+if ($lim == 'all') 
+{
+			foreach($files as $value)
+			{			
+			$picture = $spath . $value;
+			echo "<img src='$picture' width=24% />";
+			}
+echo "<br>";
+echo $back_url;
+			
+}
+else
+{
+	*/
+				for($i = 0; $i < $lim; $i++)
+				{				
+			$picture = $spath . $files[$i];
+				echo "<img src='$picture' width=24% />";
+				}
+echo "<br>";
+echo $back_url;
+
+}
+}
+}
+
+
 //точка входа в программу
 
 if (isset($_POST['limit']))
 {
-	show_picture($_POST['limit']);
+//	show_picture($_POST['limit']);
+	show_pic($_POST['limit']);
 }
 else{
 print_form();
