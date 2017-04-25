@@ -4,7 +4,7 @@
 function search_files()
 {
 	{
-$path = '/var/www/sm/timelapse/penta2/';
+$path = '/var/www/sm/timelapse/penta/';
 $spath = 'penta2/';
 
 if ($list = scandir($path))
@@ -216,19 +216,22 @@ if ($list != false)
 
 echo "<br>";
 //echo $meta;
-$path = '/var/www/sm/timelapse/penta2/';
+$path = '/var/www/sm/timelapse/penta/';
 $filo = search_files();
-
-		foreach($filo as $value)
+//var_dump($filo);
+		foreach($filo as  $value)
 		{
-			$meta[] = filectime($path . $value);
+			$meta[][filectime($path . $value )]=$value;
+			
 		}
-$fresh = max($meta);		
+var_dump($meta);
+		$fresh = max($meta[]);		
 echo $fresh;
 echo "\n";
-$xx = date("F d Y H:i:s", $fresh);
+//$xx = date("F d Y H:i:s", $fresh);
 
-echo $xx;
+//echo $xx;
+//echo "<img src='$picture' width=24% />";
 
 }
 //точка входа в программу--------------------------------------------------------------------------------------
@@ -241,7 +244,7 @@ if (isset($_POST['limit']))
 else{
 print_form();
 info_folder();
-//meta_file();
+meta_file();
 
 
 }
