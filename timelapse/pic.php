@@ -110,7 +110,7 @@ echo "</form>";
 
 function info_folder()
 {
-$path = '/var/www/sm/timelapse/penta2/';
+$path = '/var/www/sm/timelapse/penta/';
 
 if ($list = opendir($path))
 {
@@ -135,8 +135,8 @@ echo "в папке " . $x . " элемента";
 
 function show_pic($lim)
 {
-$path = '/var/www/sm/timelapse/penta2/';
-$spath = 'penta2/';
+$path = '/var/www/sm/timelapse/penta/';
+$spath = 'penta/';
 $back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
 
 
@@ -188,9 +188,10 @@ echo $back_url;
 
 function meta_file()
 {
-	/*
-$path = '/var/www/sm/timelapse/penta2/';
-$spath = 'penta2/';
+	
+$path = '/var/www/sm/timelapse/penta/';
+$spath = 'penta/';
+/*
 $name = '04_34_45.jpg';
 
 if ($list = scandir($path))
@@ -218,20 +219,28 @@ echo "<br>";
 //echo $meta;
 $path = '/var/www/sm/timelapse/penta/';
 $filo = search_files();
-//var_dump($filo);
+
 		foreach($filo as  $value)
 		{
 			$meta[][filectime($path . $value )]=$value;
 			
 		}
-var_dump($meta);
-		$fresh = max($meta[]);		
-echo $fresh;
-echo "\n";
+
+
+foreach($meta as $key => $value)
+{
+		$fresh = max($value);		
+}
+
 //$xx = date("F d Y H:i:s", $fresh);
 
 //echo $xx;
-//echo "<img src='$picture' width=24% />";
+$picture = $spath . $fresh;
+echo "крайнее движение ";
+echo  "<br>";
+echo  "<br>";
+echo "<img src='$picture' width=24% />";
+echo  "<br>";
 
 }
 //точка входа в программу--------------------------------------------------------------------------------------
