@@ -1,6 +1,35 @@
 <?php
 //создаем timelapse
 
+function search_files()
+{
+	{
+$path = '/var/www/sm/timelapse/penta2/';
+$spath = 'penta2/';
+
+if ($list = scandir($path))
+
+{
+if ($list != false)
+{
+
+	
+		foreach ($list as $value)
+	{
+		if (($value != '.') && ($value != '..'))
+		{
+				$files[] = $value;
+
+		}
+
+	}
+
+}
+}
+}
+return $files;
+var_dump($files);
+}
 
 function show_picture($lim,$cf)
 {
@@ -157,8 +186,52 @@ echo $back_url;
 }
 }
 
+function meta_file()
+{
+	/*
+$path = '/var/www/sm/timelapse/penta2/';
+$spath = 'penta2/';
+$name = '04_34_45.jpg';
 
-//точка входа в программу
+if ($list = scandir($path))
+
+{
+if ($list != false)
+{
+
+	
+		foreach ($list as $value)
+	{
+		if (($value != '.') && ($value != '..'))
+		{
+				$files[] = $value;
+
+		}
+
+	}
+*/
+
+
+//$meta = date("F d Y H:i:s", filectime($path  .  $name));
+
+echo "<br>";
+//echo $meta;
+$path = '/var/www/sm/timelapse/penta2/';
+$filo = search_files();
+
+		foreach($filo as $value)
+		{
+			$meta[] = filectime($path . $value);
+		}
+$fresh = max($meta);		
+echo $fresh;
+echo "\n";
+$xx = date("F d Y H:i:s", $fresh);
+
+echo $xx;
+
+}
+//точка входа в программу--------------------------------------------------------------------------------------
 
 if (isset($_POST['limit']))
 {
@@ -168,6 +241,9 @@ if (isset($_POST['limit']))
 else{
 print_form();
 info_folder();
+//meta_file();
+
+
 }
 
 
