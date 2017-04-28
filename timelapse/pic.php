@@ -28,7 +28,7 @@ if ($list != false)
 }
 }
 return $files;
-var_dump($files);
+//var_dump($files);
 }
 
 function show_picture($lim,$cf)
@@ -129,7 +129,7 @@ if ($list != false)
 	}
 }
 $x = count($files);
-echo "в папке " . $x . " элемента";
+echo "в папке " . $x . " файлов";
 }
 }
 
@@ -191,54 +191,45 @@ function meta_file()
 	
 $path = '/var/www/sm/timelapse/penta/';
 $spath = 'penta/';
-/*
-$name = '04_34_45.jpg';
 
-if ($list = scandir($path))
-
-{
-if ($list != false)
-{
-
-	
-		foreach ($list as $value)
-	{
-		if (($value != '.') && ($value != '..'))
-		{
-				$files[] = $value;
-
-		}
-
-	}
-*/
 
 
 //$meta = date("F d Y H:i:s", filectime($path  .  $name));
 
 echo "<br>";
 //echo $meta;
-$path = '/var/www/sm/timelapse/penta/';
-$filo = search_files();
+//$path = '/var/www/sm/timelapse/penta/';
+$path = 'penta/';
+$files = search_files();
 
-		foreach($filo as  $value)
+//var_dump($files);
+
+	foreach($files as $value)
 		{
-			$meta[][filectime($path . $value )]=$value;
+//			$filo[] = $value;
+			$meta[filectime($path . $value )] = $value;
 			
 		}
 
+//var_dump($meta);
 
-foreach($meta as $key => $value)
-{
-		$fresh = max($value);		
-}
+ksort($meta);
 
-//$xx = date("F d Y H:i:s", $fresh);
+		foreach($meta as $key => $value)
+		{
+			$file_meta = $key;
+			$file_name = $value;
+		}
 
-//echo $xx;
-$picture = $spath . $fresh;
-echo "крайнее движение ";
+echo $file_meta;
+echo "<br>";
+echo $file_name;
+echo "<br>";
+$f_meta = date("F d Y H:i:s", $file_meta);
+echo "крайнее движение ".  $f_meta;
 echo  "<br>";
 echo  "<br>";
+$picture = $path . $file_name;
 echo "<img src='$picture' width=24% />";
 echo  "<br>";
 
