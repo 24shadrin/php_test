@@ -129,7 +129,9 @@ if ($list != false)
 	}
 }
 $x = count($files);
-echo "в папке " . $x . " файлов";
+//echo "в папке " . $x . " файлов";
+return $x;
+
 }
 }
 
@@ -174,10 +176,17 @@ echo $back_url;
 else
 {
 	*/
+$file_count = info_folder();
 				for($i = 0; $i < $lim; $i++)
-				{				
+				{	
+		if ( $i < $file_count  ) 
+					{			
 			$picture = $spath . $files[$i];
 				echo "<img src='$picture' width=24% />";
+					}
+//		else echo "<br>";
+	
+		
 				}
 echo "<br>";
 echo $back_url;
@@ -221,9 +230,9 @@ ksort($meta);
 			$file_name = $value;
 		}
 
-echo $file_meta;
+echo "время старшего файла " . $file_meta;
 echo "<br>";
-echo $file_name;
+echo "имя старшего файла " .$file_name;
 echo "<br>";
 $f_meta = date("F d Y H:i:s", $file_meta);
 echo "крайнее движение ".  $f_meta;
@@ -241,9 +250,10 @@ if (isset($_POST['limit']))
 //	show_picture($_POST['limit']);
 	show_pic($_POST['limit']);
 }
+
 else{
 print_form();
-info_folder();
+echo "в папке " . info_folder() . " элементов jpg";
 meta_file();
 
 
