@@ -216,7 +216,7 @@ $files = search_files();
 	foreach($files as $value)
 		{
 //			$filo[] = $value;
-			$meta[filectime($path . $value )] = $value;
+			$meta[filemtime($path . $value )] = $value;
 			
 		}
 
@@ -230,7 +230,7 @@ ksort($meta);
 			$file_name = $value;
 		}
 
-echo "время старшего файла " . $file_meta;
+//echo "время старшего файла " . $file_meta;
 echo "<br>";
 echo "имя старшего файла " .$file_name;
 echo "<br>";
