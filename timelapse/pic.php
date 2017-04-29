@@ -160,6 +160,8 @@ if ($list != false)
 
 //	$counter = count($files);
 
+echo $back_url;
+echo "<br>";
 
 $file_count = info_folder();
 				for($i = 0; $i < $lim; $i++)
@@ -236,6 +238,9 @@ $spath = 'penta/';
 $back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
 
 $files = search_files();
+
+echo $back_url;
+echo "<br>";
 foreach($files as $value)
 		{
 			$meta[filemtime($path . $value )] = $value;
@@ -251,20 +256,31 @@ foreach($meta as $key => $value)
 			{
 				$picture = $spath . $value;
 				echo "<img src='$picture' width=24% />";
+				
+				$a = 0;
 			}
 //			else {
-/*				if ( ($cur_time - $key) > $tm)
+				if ( ($cur_time - $key) > $tm)
 				{
+					$a = 1;
+				}
+		}		
+			if ($a !=0)
+			{
 			echo "за выбранный интервал файлов нет";
 		echo "<br>";
 		echo $back_url;
-		return;
+			
 			}
-			*/
-		}
-		
-echo "<br>";
-		echo $back_url;	
+			else 
+					{		
+					echo "<br>";
+					echo $back_url;
+					
+					}
+//		return;
+
+			
 }
 
 function print_form_time()
