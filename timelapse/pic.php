@@ -1,11 +1,26 @@
 <?php
 //создаем timelapse
 
+//глобальные переменные
+$date_today = date("Y-m-d");
+//echo $date_today;
+//$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
+//$path = '1/';
+//$spath = 'penta2/';
+
+$path = '/var/www/sm/timelapse/penta/';
+$spath = 'penta/';
+
+//echo $path;
+
 function search_files()
+//ищет фалы в целевой папке, возвращает массив с файлами
 {
 	{
 $path = '/var/www/sm/timelapse/penta/';
-$spath = 'penta2/';
+//$path = '/home/pi/beward/penta/2017-05-03/beward_penta/1/';
+//$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/;
+$spath = 'penta/';
 
 if ($list = scandir($path))
 
@@ -31,6 +46,7 @@ return $files;
 //var_dump($files);
 }
 
+/*
 function show_picture($lim,$cf)
 {
 //$path = '/home/pi/beward/penta/2017-04-18/beward_penta/1/';
@@ -89,7 +105,7 @@ else
 	echo "folder with content not found";
 }
 }
-
+*/
 
 function print_form()
 {
@@ -110,38 +126,25 @@ echo "</form>";
 
 function info_folder()
 {
-$path = '/var/www/sm/timelapse/penta/';
+//подсчитывает кол-во элементов в целевой папке
 
-if ($list = opendir($path))
-{
-if ($list != false)
-{
-
-	while((($file = readdir($list)) !== false))	
-
-	{
-		if (($file != '.') && ($file != '..'))
-		{
-				$files[] = $file;
-
-		}
-
-	}
-}
+$files = search_files();
 $x = count($files);
-//echo "в папке " . $x . " файлов";
 return $x;
 
-}
+
 }
 
 function show_pic($lim)
 {
+//показывает выбранное количество файлов
 $path = '/var/www/sm/timelapse/penta/';
 $spath = 'penta/';
+//$path = '/home/pi/beward/penta/2017-05-03/beward_penta/1/';
+//$spath = '1/';
 $back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
 
-
+/*
 if ($list = scandir($path))
 {
 if ($list != false)
@@ -157,8 +160,9 @@ if ($list != false)
 		}
 
 	}
+*/
+$files = search_files();
 
-//	$counter = count($files);
 
 echo $back_url;
 echo "<br>";
@@ -170,20 +174,17 @@ $file_count = info_folder();
 					{			
 						$picture = $spath . $files[$i + ($file_count - $lim) ];
 						echo "<img src='$picture' width=24% />";
-					}
-
-	
-		
+					}	
 				}
 echo "<br>";
 echo $back_url;
 
 }
-}
-}
+
 
 function meta_file()
 {
+//выдает статистику по целевой папке имя и время старшего файла и картинку самого файла
 	
 $path = '/var/www/sm/timelapse/penta/';
 $spath = 'penta/';
@@ -233,6 +234,7 @@ echo  "<br>";
 
 function show_pic_time($tm)
 {
+// выводит файла за интервал времени
 $path = '/var/www/sm/timelapse/penta/';
 $spath = 'penta/';
 $back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
@@ -243,7 +245,7 @@ echo $back_url;
 echo "<br>";
 foreach($files as $value)
 		{
-			$meta[filemtime($path . $value )] = $value;
+			$meta[filectime($path . $value )] = $value;
 			
 		}
 		ksort($meta);
@@ -285,7 +287,7 @@ foreach($meta as $key => $value)
 
 function print_form_time()
 {
-echo "показать за ";
+echo "показать за последние ";
 
 echo '<form action="pic.php" method="post">';
 
