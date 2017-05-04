@@ -16,34 +16,54 @@ $spath = 'penta/';
 function search_files()
 //ищет фалы в целевой папке, возвращает массив с файлами
 {
-global $path, $spath;
-	{
-//$path = '/var/www/sm/timelapse/penta/';
+//global $path, $spath;
+//	{
+$path = '/var/www/sm/timelapse/penta/';
 //$path = '/home/pi/beward/penta/2017-05-03/beward_penta/1/';
 //$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/;
-//$spath = 'penta/';
+$spath = 'penta/';
 
-if ($list = scandir($path))
+foreach (glob($path . '*.jpg') as $value)
+{
+	$full_path_files[] = $value;
 
+}
+
+//var_dump($full_path_files);
+//echo "<br>";
+
+foreach ($full_path_files as $value)
 {
-if ($list != false)
-{
+	$split_files = explode("/", $value);
+	$files[] = $split_files[(count($split_files) - 1)];
+}
+
+
+//$files = explode('/', $full_path_files);
+
+//if ($list = scandir($path))
+
+//{
+//if ($list != false)
+//{
 
 	
-		foreach ($list as $value)
-	{
-		if (($value != '.') && ($value != '..'))
-		{
-				$files[] = $value;
+//		foreach ($list as $value)
+//	{
+//		if (($value != '.') && ($value != '..'))
+//		{
+//				$files[] = $value;
+		
+//		}
 
-		}
+//	}
 
-	}
-
-}
-}
-}
+//}
+//}
+//}
 return $files;
+//var_dump($files);
+
 //var_dump($files);
 }
 
@@ -154,11 +174,19 @@ echo "<br>";
 $file_count = info_folder();
 				for($i = 0; $i < $lim; $i++)
 				{	
-		if ( $i < $file_count  ) 
+		if (( $i < $file_count  ) && ($lim < $file_count))
 					{			
 						$picture = $spath . $files[$i + ($file_count - $lim) ];
 						echo "<img src='$picture' width=24% />";
 					}	
+				
+		else 
+		{
+			
+			echo "файлов меньше 5";
+			echo "<br>";
+			
+		}
 				}
 echo "<br>";
 echo $back_url;
