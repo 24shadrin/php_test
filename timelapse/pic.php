@@ -5,8 +5,8 @@
 $date_today = date("Y-m-d");
 //echo $date_today;
 //$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
-//$path = '1/';
-//$spath = 'penta2/';
+//$spath = '1/';
+
 
 $path = '/var/www/sm/timelapse/penta/';
 $spath = 'penta/';
@@ -18,10 +18,10 @@ function search_files()
 {
 global $path, $spath;
 	{
-$path = '/var/www/sm/timelapse/penta/';
+//$path = '/var/www/sm/timelapse/penta/';
 //$path = '/home/pi/beward/penta/2017-05-03/beward_penta/1/';
 //$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/;
-$spath = 'penta/';
+//$spath = 'penta/';
 
 if ($list = scandir($path))
 
@@ -219,8 +219,9 @@ echo  "<br>";
 function show_pic_time($tm)
 {
 // выводит файла за интервал времени
-$path = '/var/www/sm/timelapse/penta/';
-$spath = 'penta/';
+
+global $path, $spath;
+
 $back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
 
 $files = search_files();
