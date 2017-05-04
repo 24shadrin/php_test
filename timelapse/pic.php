@@ -14,7 +14,7 @@ $spath = 'penta/';
 //echo $path;
 
 function search_files()
-//ищет фалы в целевой папке, возвращает массив с файлами
+//ищет файлы в целевой папке, возвращает массив с файлами
 {
 //global $path, $spath;
 //	{
@@ -172,6 +172,8 @@ echo $back_url;
 echo "<br>";
 
 $file_count = info_folder();
+if ( $file_count > $lim )
+{
 				for($i = 0; $i < $lim; $i++)
 				{	
 		if (( $i < $file_count  ) && ($lim < $file_count))
@@ -179,15 +181,18 @@ $file_count = info_folder();
 						$picture = $spath . $files[$i + ($file_count - $lim) ];
 						echo "<img src='$picture' width=24% />";
 					}	
-				
-		else 
+				}
+}		
+else 
 		{
-			
-			echo "файлов меньше 5";
-			echo "<br>";
+			for($i = 0; $i < $file_count; $i++)
+				{	
+						$picture = $spath . $files[$i];
+						echo "<img src='$picture' width=24% />";
+				}
 			
 		}
-				}
+				
 echo "<br>";
 echo $back_url;
 
