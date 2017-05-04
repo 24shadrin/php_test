@@ -16,6 +16,7 @@ $spath = 'penta/';
 function search_files()
 //ищет фалы в целевой папке, возвращает массив с файлами
 {
+global $path, $spath;
 	{
 $path = '/var/www/sm/timelapse/penta/';
 //$path = '/home/pi/beward/penta/2017-05-03/beward_penta/1/';
@@ -126,6 +127,7 @@ echo "</form>";
 
 function info_folder()
 {
+
 //подсчитывает кол-во элементов в целевой папке
 
 $files = search_files();
@@ -138,29 +140,11 @@ return $x;
 function show_pic($lim)
 {
 //показывает выбранное количество файлов
-$path = '/var/www/sm/timelapse/penta/';
-$spath = 'penta/';
-//$path = '/home/pi/beward/penta/2017-05-03/beward_penta/1/';
-//$spath = '1/';
+
+global $path, $spath;
 $back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
 
-/*
-if ($list = scandir($path))
-{
-if ($list != false)
-{
 
-	
-		foreach ($list as $value)
-	{
-		if (($value != '.') && ($value != '..'))
-		{
-				$files[] = $value;
-
-		}
-
-	}
-*/
 $files = search_files();
 
 
@@ -185,9 +169,9 @@ echo $back_url;
 function meta_file()
 {
 //выдает статистику по целевой папке имя и время старшего файла и картинку самого файла
-	
-$path = '/var/www/sm/timelapse/penta/';
-$spath = 'penta/';
+global $path, $spath;
+
+
 
 
 
@@ -196,7 +180,7 @@ $spath = 'penta/';
 echo "<br>";
 //echo $meta;
 //$path = '/var/www/sm/timelapse/penta/';
-$path = 'penta/';
+
 $files = search_files();
 
 //var_dump($files);
@@ -226,7 +210,7 @@ $f_meta = date("d m Y H:i:s", $file_meta);
 echo "крайнее движение ".  $f_meta;
 echo  "<br>";
 echo  "<br>";
-$picture = $path . $file_name;
+$picture = $spath . $file_name;
 echo "<img src='$picture' width=24% />";
 echo  "<br>";
 
