@@ -6,6 +6,7 @@ $date_today = date("Y-m-d");
 //echo $date_today;
 //$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
 //$spath = '1/';
+//$spath = $path;
 
 
 $path = '/var/www/sm/timelapse/penta/';
@@ -16,12 +17,12 @@ $spath = 'penta/';
 function search_files()
 //ищет файлы в целевой папке, возвращает массив с файлами
 {
-//global $path, $spath;
+global $path, $spath;
 //	{
-$path = '/var/www/sm/timelapse/penta/';
+//$path = '/var/www/sm/timelapse/penta/';
 //$path = '/home/pi/beward/penta/2017-05-03/beward_penta/1/';
 //$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/;
-$spath = 'penta/';
+//$spath = 'penta/';
 
 foreach (glob($path . '*.jpg') as $value)
 {
@@ -164,7 +165,8 @@ function show_pic($lim)
 global $path, $spath;
 $back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
 
-
+if ( info_folder() > 0 )
+{
 $files = search_files();
 
 
@@ -183,7 +185,7 @@ if ( $file_count > $lim )
 					}	
 				}
 }		
-else 
+	else 
 		{
 			for($i = 0; $i < $file_count; $i++)
 				{	
@@ -195,7 +197,13 @@ else
 				
 echo "<br>";
 echo $back_url;
-
+}
+	else 
+{
+	echo "нет файлов или что-то пошло не так";
+echo "<br>";
+echo $back_url;
+}
 }
 
 
@@ -204,16 +212,15 @@ function meta_file()
 //выдает статистику по целевой папке имя и время старшего файла и картинку самого файла
 global $path, $spath;
 
-
-
-
-
 //$meta = date("F d Y H:i:s", filectime($path  .  $name));
 
 echo "<br>";
 //echo $meta;
 //$path = '/var/www/sm/timelapse/penta/';
-
+			
+			if ( info_folder() > 0)
+				
+{
 $files = search_files();
 
 //var_dump($files);
@@ -248,6 +255,7 @@ echo "<img src='$picture' width=24% />";
 echo  "<br>";
 
 }
+}
 
 function show_pic_time($tm)
 {
@@ -256,7 +264,8 @@ function show_pic_time($tm)
 global $path, $spath;
 
 $back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
-
+		if ( info_folder() > 0)
+	{
 $files = search_files();
 
 echo $back_url;
@@ -300,8 +309,15 @@ foreach($meta as $key => $value)
 					}
 //		return;
 
-			
-}
+		}	
+		else 
+		{
+echo "нет файлов или что-то пошло не так";
+echo "<br>";
+echo $back_url;		
+		}
+	}
+	
 
 function print_form_time()
 {
@@ -337,7 +353,14 @@ if (isset($_POST['item']))
 else{
 print_form();
 print_form_time();
+if ( info_folder() > 0 )
+{
 echo "в папке " . info_folder() . " элементов jpg";
+}
+else
+{
+	echo "в папке нет элементов jpg или что-то пошло не так";
+}
 meta_file();
 
 
