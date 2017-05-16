@@ -4,13 +4,13 @@
 //глобальные переменные
 $date_today = date("Y-m-d");
 //echo $date_today;
-//$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
-//$spath = '1/';
+$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
+//$spath = $path;
 //$spath = $path;
 
 
-$path = '/var/www/sm/timelapse/penta/';
-$spath = 'penta/';
+//$path = '/var/www/sm/timelapse/penta/';
+$spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
 
 //echo $path;
 
