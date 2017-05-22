@@ -327,15 +327,21 @@ echo '<form action="pic.php" method="post">';
 
 echo "<select name='item'>";
 echo "<option value='300'> 5 минут </option>";
+echo "<option value='900'> 15 минут </option>";
 echo "<option value='1800'> 30 минут </option>";
 echo "<option value='3600'> 1 час </option>";
+echo "<option value='7200'> 2 часа </option>";
+echo "<option value='10800'> 3 часа </option>";
+echo "<option value='21600'> 6 часов </option>";
 
 
 echo '<input type="submit" value="применить" />';
 echo "</select>";
 echo "</form>";
 }
-//точка входа в программу--------------------------------------------------------------------------------------
+//точка входа в программу-----------------------------------------------------------------------------------
+
+echo '<link rel="stylesheet" href="css/foundation.css" /> ';
 
 if (isset($_POST['limit']))
 {
