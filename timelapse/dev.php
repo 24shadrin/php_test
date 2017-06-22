@@ -2,7 +2,8 @@
 //создаем timelapse
 
 //глобальные переменные
-$date_today = date("Y-m-d");
+//$date_today = date("Y-m-d");
+$date_today = "2017-06-22";
 //echo $date_today;
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
 //$spath = $path;
@@ -344,103 +345,115 @@ echo "</form>";
 
 function serial()
 {
+//функция делит фотографии на серии, отбирает 5 средник из каждой серии
+
 	global $path, $spath;
-//$path = "/penta";
+
 	$files = search_files();
-	$b= count($files);
+	
 	
 	foreach($files as $value)
 		{
 			$md[] = filectime($path . $value);
 			$f_name[] = $value;
 		}
-//		ksort($meta);
-		
-	
-/*		
 
-foreach($meta as $key => $value)
-		{
-//			$cur_pic = $key
-//			if ((($key + 1) - $key) < 5)
-			{
-				
-				$md[] = $key;
-				$f_name[] = $value;
-//				$picture = $spath . $value;
-//				echo "<img src='$picture' width=24% />";
-			}	
-		}	
-		*/		
-//	var_dump($md);
-//	var_dump($f_name);
+
 
 $i_max = count($md);
 $j_max = count($f_name);
+
+echo "количество элементов в массивах файлов и их размеров";
+echo "<br>";
 echo $i_max;
 echo "<br>";
 echo $j_max;
 
 $coun = 0;
+
+//ходим циклом по массиву с датой запоминаем индексы где разница между датой больше 5 секунд
 		for($i=0; $i < $i_max; $i++)
 		{
 			if (($md[$i] - $md[$i+1]) > -5 ) 
-//|| (($md[$i] - $md[$i+1]) == 0 ))
+
 			{
 
-			$files_serial[] = $f_name[$i];
+//			$files_serial[] = $f_name[$i];
 		
-//			echo $files_serial[$i];
-	
-//			echo "<br>";
+
 			}
 		else
 		{
-		
+//счетчик серий. Сколько у нас получилось таких пачек файлов с разницей создания меньше 5 секунд		
 			$coun++;
-			$files_serial[] = $f_name[$i];
+//			$files_serial[] = $f_name[$i];
+//это массив с индексами где разница с файлами уже больше 5 секунд
 			$numer[] = $i;
 
-//			$files_serial[] = 777;
+
 		}
 		}
-//echo $coun;
-//		var_dump($files_serial);
-//		var_dump($numer);
-//		echo $coun;
+
 echo "<br>";
 echo "сегодня зафиксировано " . $coun . " серий";
 echo "<br>";
+echo "массив с разделителями";
+echo "<br>";
+var_dump($numer);
+echo "<br>";
 
 
-for($i=$numer[5]+1; $i <= $numer[17]; $i++)
+
+// здесь указываем из какой серии хотим увидать 5 фотографий
+$seriya = 18;
+//чтоб не путаться серии считаю с 1. Но нумерация массива с 0. Поэтому вычитаю 1
+$seriya = $seriya -1;
+
+//вспомогательные переменные для обхода массива. С какой начинать и до какого пердела.
+$lim = $numer[$seriya + 1];
+if  ( $seriya == ( $coun - 1 ) )
 	{
-		$current_serial[] = $files_serial[$i];
-//		echo $files_serial[$i];
-//		echo "<br>";	
+	$lim = count($f_name);
 	}
+$begin = $numer[$seriya];
+if ( $seriya == 0)
+	{
+	$begin = 0;
+	}
+
+
+//for($i=$numer[$seriya]; $i <= $lim; $i++)
+// записываем в массив $current_serial выбранную серию файлов
+	for($i=$begin; $i <= $lim; $i++)
+	{
+		//$current_serial[] = $files_serial[$i];
+		$current_serial[] = $f_name[$i];
+	//	echo $current_serial[$i];
+	//	echo "<br>";	
+	}
+//	var_dump($current_serial);
+	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
 	$mediana = ($current_count = count($current_serial)/2);
 	echo $mediana;
 	echo "<br>";
-
+//создаем массив, который будем выводить на экран. Добавляем в него 5 файлов около медианы
 				$show_current[0] =  $current_serial[$mediana-3];
 				$show_current[1] =  $current_serial[$mediana-2];
 				$show_current[2] =  $current_serial[$mediana];
 				$show_current[3] =  $current_serial[$mediana+1];
 				$show_current[4] =  $current_serial[$mediana+3];
-	var_dump($show_current);	
+	
+	var_dump($show_current);
 	echo "<br>";	
-
+//выводим на экран нашу серию картинок. Здесь можно сделать функцию. Так как эта конструкция часто используется
 	foreach($show_current as $value)
 	{
 		$picture = $spath . $value;
 		echo "<img src='$picture' width=24% />";
 	}
-	//			echo "<img src='$picture' width=24% />";
-	//		}	
 
 echo "<br>";
-	echo(count($files_serial));
+	
 
 }
 
