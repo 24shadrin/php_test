@@ -406,19 +406,40 @@ $coun = 0;
 		}
 //echo $coun;
 //		var_dump($files_serial);
-		var_dump($numer);
+//		var_dump($numer);
 //		echo $coun;
 echo "<br>";
 echo "сегодня зафиксировано " . $coun . " серий";
 echo "<br>";
 
 
-for($i=$numer[-1]+1; $i <= $numer[0]; $i++)
+for($i=$numer[5]+1; $i <= $numer[17]; $i++)
 	{
+		$current_serial[] = $files_serial[$i];
 //		echo $files_serial[$i];
-		echo "<br>";	
+//		echo "<br>";	
 	}
+	$mediana = ($current_count = count($current_serial)/2);
+	echo $mediana;
 	echo "<br>";
+
+				$show_current[0] =  $current_serial[$mediana-3];
+				$show_current[1] =  $current_serial[$mediana-2];
+				$show_current[2] =  $current_serial[$mediana];
+				$show_current[3] =  $current_serial[$mediana+1];
+				$show_current[4] =  $current_serial[$mediana+3];
+	var_dump($show_current);	
+	echo "<br>";	
+
+	foreach($show_current as $value)
+	{
+		$picture = $spath . $value;
+		echo "<img src='$picture' width=24% />";
+	}
+	//			echo "<img src='$picture' width=24% />";
+	//		}	
+
+echo "<br>";
 	echo(count($files_serial));
 
 }
