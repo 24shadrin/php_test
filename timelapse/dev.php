@@ -2,8 +2,8 @@
 //создаем timelapse
 
 //глобальные переменные
-$date_today = date("Y-m-d");
-//$date_today = "2017-06-22";
+//$date_today = date("Y-m-d");
+$date_today = "2017-06-24";
 
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
@@ -248,7 +248,7 @@ function serial()
 	
 	foreach($files as $value)
 		{
-			$md[] = filectime($path . $value);
+			$md[] = filemtime($path . $value);
 			$f_name[] = $value;
 		}
 
