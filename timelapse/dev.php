@@ -237,9 +237,9 @@ echo "</select>";
 echo "</form>";
 }
 
-function serial($seriya)
+function serial()
 {
-//функция делит фотографии на серии, отбирает 5 средник из каждой серии
+//функция делит фотографии на серии, возвращает массив в котором храним индексы где разница менжду файлами более 5 секунд
 
 	global $path, $spath;
 
@@ -271,7 +271,7 @@ $coun = 0;
 			if (($md[$i] - $md[$i+1]) > -5 ) 
 
 			{
-
+			//  получается здесь ничего не делаем!!!
 //			$files_serial[] = $f_name[$i];
 		
 
@@ -280,81 +280,83 @@ $coun = 0;
 		{
 //счетчик серий. Сколько у нас получилось таких пачек файлов с разницей создания меньше 5 секунд		
 			$coun++;
-//			$files_serial[] = $f_name[$i];
+
 //это массив с индексами где разница с файлами уже больше 5 секунд
 			$numer[] = $i;
 
 
 		}
 		}
+	
+return $numer;
+}		
+
+
+function serial_show()
+{
+//функция выводит по 5 картинок из всех серий за текущий день.
+
+global $path, $spath;
+$numer = serial();
+$coun = count($numer);
 
 echo "<br>";
-echo "сегодня зафиксировано " . $coun . " серий";
-echo "<br>";
-//echo "массив с разделителями";
-//echo "<br>";
-//var_dump($numer);
+echo "сегодня зафиксировано " . ( $coun + 1 ) . " серий";
 echo "<br>";
 
-//разбиваем на 2 функции
+$f_name = search_files();
 
+// Этот большой цикл выводит по 5 картинок из каждой серии
 
-// здесь указываем из какой серии хотим увидать 5 фотографий
-//$seriya = 19;
+for ($seriya=0; $seriya <= $coun; $seriya++)
+{
 
-
-//чтоб не путаться серии считаю с 1. Но нумерация массива с 0. Поэтому вычитаю 1
-echo "номер серии " . $seriya;
+//выводим номер серии. +1 делаем для удобства. Номера в массиве с 0. Человеку удобней с 1.
+echo "номер серии " . ( $seriya +1 );
 echo "<br>";
-
-$seriya = $seriya - 1;
-
-//вспомогательные переменные для обхода массива. С какой начинать и до какого предела.
-$lim = $numer[$seriya + 1];
-if  ( $seriya == ( $coun - 1 ) )
+//вычисляем две переменные с какого номера начинать и каким заканчивать.
+$lim = $numer[$seriya];
+if  ( $seriya == ( $coun ) )
 	{
 	$lim = count($f_name);
 	}
-$begin = $numer[$seriya];
+$begin = $numer[$seriya - 1];
 if ( $seriya == 0)
 	{
 	$begin = 0;
 	}
-
-
-//for($i=$numer[$seriya]; $i <= $lim; $i++)
-// записываем в массив $current_serial выбранную серию файлов
-	for($i=$begin; $i <= $lim; $i++)
-	{
-		//$current_serial[] = $files_serial[$i];
-		$current_serial[] = $f_name[$i];
-	//	echo $current_serial[$i];
-	//	echo "<br>";	
-	}
-//	var_dump($current_serial);
-	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
-	$mediana = ($current_count = count($current_serial)/2);
-//	echo $mediana;
-	echo "<br>";
-//создаем массив, который будем выводить на экран. Добавляем в него 5 файлов около медианы
-				$show_current[0] =  $current_serial[$mediana-3];
-				$show_current[1] =  $current_serial[$mediana-2];
-				$show_current[2] =  $current_serial[$mediana];
-				$show_current[3] =  $current_serial[$mediana+1];
-				$show_current[4] =  $current_serial[$mediana+3];
 	
-//	var_dump($show_current);
-	echo "<br>";	
+
+		for($i=$begin; $i <= $lim; $i++)
+			{
+		
+				$current_serial[] = $f_name[$i];
+			}
+	
+	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
+	//$mediana = ($current_count = count($current_serial)/2);
+				$mediana = (count($current_serial)/2);
+
+
+//создаем массив, который будем выводить на экран. Добавляем в него 5 файлов около медианы
+				$show_current[0] =  $current_serial[$mediana-5];
+				$show_current[1] =  $current_serial[$mediana-3];
+				$show_current[2] =  $current_serial[$mediana];
+				$show_current[3] =  $current_serial[$mediana+3];
+				$show_current[4] =  $current_serial[$mediana+5];
+		
 //выводим на экран нашу серию картинок. Здесь можно сделать функцию. Так как эта конструкция часто используется
 	foreach($show_current as $value)
 	{
 		$picture = $spath . $value;
 		echo "<img src='$picture' width=20% />";
 	}
-
-echo "<br>";
+// обнуляем массив с текущим набором файлов
+$current_serial = [];
+}
 
 }
+
 
 
 
@@ -388,10 +390,9 @@ else
 }
 meta_file();
 
-for($i=1; $i <= 19; $i++)
-{
-serial($i);
-}
+
+serial_show();
+
 
 
 }
