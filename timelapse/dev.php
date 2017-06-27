@@ -2,8 +2,8 @@
 //создаем timelapse
 
 //глобальные переменные
-//$date_today = date("Y-m-d");
-$date_today = "2017-06-24";
+$date_today = date("Y-m-d");
+//$date_today = "2017-06-25";
 
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
@@ -300,6 +300,9 @@ global $path, $spath;
 $numer = serial();
 $coun = count($numer);
 
+	if ((count($numer)) > 0 )
+	{
+
 echo "<br>";
 echo "сегодня зафиксировано " . ( $coun + 1 ) . " серий";
 echo "<br>";
@@ -308,12 +311,19 @@ $f_name = search_files();
 
 // Этот большой цикл выводит по 5 картинок из каждой серии
 
-for ($seriya=0; $seriya <= $coun; $seriya++)
+//for ($seriya=0; $seriya <= $coun; $seriya++)
+$m_serial = ( $coun - 5 );
+if ( $m_serial < 0 ) 
 {
-
+	$m_serial = 0;
+}
+for ($seriya = $m_serial; $seriya <= $coun; $seriya++)
+{
+//$a = filemtime(($f_name[$coun]);
 //выводим номер серии. +1 делаем для удобства. Номера в массиве с 0. Человеку удобней с 1.
-echo "номер серии " . ( $seriya +1 );
-echo "<br>";
+//echo "номер серии " . ( $seriya +1 );
+//echo "<br>";
+
 //вычисляем две переменные с какого номера начинать и каким заканчивать.
 $lim = $numer[$seriya];
 if  ( $seriya == ( $coun ) )
@@ -332,6 +342,8 @@ if ( $seriya == 0)
 		
 				$current_serial[] = $f_name[$i];
 			}
+echo "номер серии " . ( $seriya +1 );
+echo "<br>";
 	
 	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
 	//$mediana = ($current_count = count($current_serial)/2);
@@ -351,18 +363,33 @@ if ( $seriya == 0)
 		$picture = $spath . $value;
 		echo "<img src='$picture' width=20% />";
 	}
+
 // обнуляем массив с текущим набором файлов
 $current_serial = [];
 }
-
+}
+else 
+	{
+	echo "<br>";
+	echo "серий не обнаружено или что-то пошло не так.";
+	}
 }
 
+function full_serial($mas_serial)
+{
+global $path, $spath;
+	foreach($mas_serial as $value)
+	{
+		$picture = $spath . $value;
+		echo "<img src='$picture' width=20% />";
+	}
+}
 
 
 
 //точка входа в программу-----------------------------------------------------------------------------------
 
-echo '<link rel="stylesheet" href="css/foundation.css" /> ';
+//echo '<link rel="stylesheet" href="css/foundation.css" /> ';
 
 if (isset($_POST['limit']))
 {
@@ -389,15 +416,8 @@ else
 	echo "в папке нет элементов jpg или что-то пошло не так";
 }
 meta_file();
-
-
 serial_show();
 
-
-
 }
-
-
-
 
 ?>
