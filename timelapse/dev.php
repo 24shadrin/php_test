@@ -300,7 +300,7 @@ global $path, $spath;
 $numer = serial();
 $coun = count($numer);
 
-	if ((count($numer)) > 0 )
+	if ((count($numer)) >= 0 )
 	{
 
 echo "<br>";
@@ -317,6 +317,7 @@ if ( $m_serial < 0 )
 {
 	$m_serial = 0;
 }
+
 for ($seriya = $m_serial; $seriya <= $coun; $seriya++)
 {
 //$a = filemtime(($f_name[$coun]);
@@ -369,7 +370,7 @@ $current_serial = [];
 }
 }
 else 
-	{
+	{ 
 	echo "<br>";
 	echo "серий не обнаружено или что-то пошло не так.";
 	}
