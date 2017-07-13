@@ -268,7 +268,7 @@ $coun = 0;
 //ходим циклом по массиву с датой запоминаем индексы где разница между датой больше 5 секунд
 		for($i=0; $i < $i_max; $i++)
 		{
-			if (($md[$i] - $md[$i+1]) > -5 ) 
+			if (($md[$i] - $md[$i+1]) > -10 ) 
 
 			{
 			//  получается здесь ничего не делаем!!!
@@ -300,14 +300,16 @@ global $path, $spath;
 $numer = serial();
 $coun = count($numer);
 
-	if ((count($numer)) >= 0 )
+$f_name = search_files();
+	if ((count($f_name)) > 0 )
+//	if ((count($numer)) > 0 )
 	{
 
 echo "<br>";
 echo "сегодня зафиксировано " . ( $coun + 1 ) . " серий";
 echo "<br>";
 
-$f_name = search_files();
+
 
 // Этот большой цикл выводит по 5 картинок из каждой серии
 
@@ -327,6 +329,13 @@ for ($seriya = $m_serial; $seriya <= $coun; $seriya++)
 
 //вычисляем две переменные с какого номера начинать и каким заканчивать.
 $lim = $numer[$seriya];
+
+//if ( $coun == 0 )
+//	{
+//	$lim = 0;
+//	}
+
+
 if  ( $seriya == ( $coun ) )
 	{
 	$lim = count($f_name);
@@ -345,6 +354,9 @@ if ( $seriya == 0)
 			}
 echo "номер серии " . ( $seriya +1 );
 echo "<br>";
+							
+					if ( count($current_serial) > 6 )
+					{
 	
 	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
 	//$mediana = ($current_count = count($current_serial)/2);
@@ -364,7 +376,23 @@ echo "<br>";
 		$picture = $spath . $value;
 		echo "<img src='$picture' width=20% />";
 	}
+					}
+					else
+					{	//var_dump($current_serial);
+//						$current_serial = array_pop($current_serial);
+				
+//						foreach($current_serial as $value)
+						for($i=0; $i< (count($current_serial) - 1); $i++)
+						{
+//							$picture = $spath . $value;
+							$picture = $spath . $current_serial[$i];
+							
+//							echo $value . "<br>";
 
+							echo "<img src='$picture' width=20% />";
+						}
+						echo "<br>";
+					}
 // обнуляем массив с текущим набором файлов
 $current_serial = [];
 }
@@ -419,6 +447,13 @@ else
 meta_file();
 serial_show();
 
+echo "<form>";
+//echo "<input type='text' name='text'>";
+echo "<input type='submit' name='all' value='Все серии'>";
+echo "</form> ";
+}
+if(isset($all)) {
+serial_show();
 }
 
 ?>
