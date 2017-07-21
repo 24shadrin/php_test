@@ -8,6 +8,9 @@ $date_today = date("Y-m-d");
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
 
+//$path = '/home/pi/beward/penta/2017-07-20/beward_penta/1/';
+//$spath = 'http://192.168.1.200/pi/2017-07-20/beward_penta/1/';
+
 function search_files()
 //ищет файлы в целевой папке, возвращает массив с файлами
 {
@@ -265,7 +268,7 @@ echo $j_max;
 
 $coun = 0;
 
-//ходим циклом по массиву с датой запоминаем индексы где разница между датой больше 5 секунд
+//ходим циклом по массиву с датой запоминаем индексы где разница между датой больше 10 секунд
 		for($i=0; $i < $i_max; $i++)
 		{
 			if (($md[$i] - $md[$i+1]) > -10 ) 
@@ -298,6 +301,7 @@ function serial_show()
 
 global $path, $spath;
 $numer = serial();
+var_dump($numer);
 $coun = count($numer);
 
 $f_name = search_files();
@@ -355,7 +359,7 @@ if ( $seriya == 0)
 echo "номер серии " . ( $seriya +1 );
 echo "<br>";
 							
-					if ( count($current_serial) > 6 )
+					if ( count($current_serial) > 12 )
 					{
 	
 	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
@@ -383,13 +387,16 @@ echo "<br>";
 				
 //						foreach($current_serial as $value)
 						for($i=0; $i< (count($current_serial) - 1); $i++)
+//						for($i=0; $i< 5; $i++)
 						{
 //							$picture = $spath . $value;
+								if ( $i < 5 ) {
 							$picture = $spath . $current_serial[$i];
 							
 //							echo $value . "<br>";
 
 							echo "<img src='$picture' width=20% />";
+												}	
 						}
 						echo "<br>";
 					}
@@ -447,6 +454,9 @@ else
 meta_file();
 serial_show();
 
+
+
+
 echo "<form>";
 //echo "<input type='text' name='text'>";
 echo "<input type='submit' name='all' value='Все серии'>";
@@ -455,5 +465,7 @@ echo "</form> ";
 if(isset($all)) {
 serial_show();
 }
+
+
 
 ?>
