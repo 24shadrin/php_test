@@ -5,8 +5,8 @@
 $date_today = date("Y-m-d");
 //$date_today = "2017-06-25";
 
-$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
-$spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
+$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/2/';
+$spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/2/';
 
 //$path = '/home/pi/beward/penta/2017-07-20/beward_penta/1/';
 //$spath = 'http://192.168.1.200/pi/2017-07-20/beward_penta/1/';
@@ -285,7 +285,7 @@ $coun = 0;
 			$coun++;
 
 //это массив с индексами где разница с файлами уже больше 5 секунд
-			$numer[] = $i;
+			$numer[] = $i+1;
 
 
 		}
