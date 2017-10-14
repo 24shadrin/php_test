@@ -10,8 +10,8 @@ $date_today = date("Y-m-d");
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
 
-//$path = '/home/pi/beward/penta/2017-07-20/beward_penta/1/';
-//$spath = 'http://192.168.1.200/pi/2017-07-20/beward_penta/1/';
+//$path = '/home/pi/beward/penta/2017-10-12/beward_penta/1/';
+//$spath = 'http://192.168.1.200/pi/2017-10-12/beward_penta/1/';
 
 function search_files()
 //ищет файлы в целевой папке, возвращает массив с файлами
@@ -268,6 +268,7 @@ echo "<br>";
 echo $i_max;
 echo "<br>";
 echo $j_max;
+echo "<br>";
 
 $coun = 0;
 
@@ -317,8 +318,10 @@ function serial_show()
 //функция выводит по 5 картинок из всех серий за текущий день.
 
 global $path, $spath;
+#мыссив с индексами где разница между файлами более 5 секунд
 $numer = serial();
 var_dump($numer);
+#количество серий
 $coun = count($numer);
 
 $f_name = search_files();
@@ -351,18 +354,19 @@ for ($seriya = $m_serial; $seriya <= $coun; $seriya++)
 //вычисляем две переменные с какого номера начинать и каким заканчивать.
 $lim = $numer[$seriya];
 
-
+#если последняя серия равна количесву серий, то правая граница равна количеству элементо в массиве. Так может быть если всего одна серия
 if  ( $seriya == ( $coun ) )
 	{
 	$lim = count($f_name);
 	}
+# если всего одна серия то начинать с нулевого элемента
 $begin = $numer[$seriya - 1];
 if ( $seriya == 0)
 	{
 	$begin = 0;
 	}
 	
-
+#наполняем массив элементами с границами begin начало и lim конец
 		for($i=$begin; $i < $lim; $i++)
 			{
 		
@@ -370,26 +374,36 @@ if ( $seriya == 0)
 
 			}
 
-			$super = $current_serial;
-			sort($super);
-			var_dump($super);
+
+
+//			$super = $current_serial;
+//			sort($super);
+//			var_dump($super);
 //echo "номер серии " . ( $seriya +1 );
 			$str = $seriya + 1;
 			$str_form = "номер серии " . $str;
 			$sum_in_serial = count($current_serial);
+echo "<br>";
 
 echo "<form action='' method=post>";
 echo "<input type='submit' name='$str' value='$str_form'>";
 echo "</form>";
-echo "всего в серии " . $sum_in_serial . " элемента";
-var_dump ($current_serial);
-
-
-
-
-
+echo "всего в серии " . $sum_in_serial . " jpg";
+////var_dump ($current_serial);
 
 echo "<br>";
+if ($_POST[$str]) {
+show_img_html($current_serial);	
+return;
+}
+
+
+
+
+
+
+
+
 							
 //					if ( count($current_serial) > 12 )
 						if ( $sum_in_serial > 12 )
@@ -420,9 +434,6 @@ echo "<br>";
 
 show_img_html($show_current);
 
-if ($_POST[$str]) {
-show_img_html($super);	
-}
 
 
 
