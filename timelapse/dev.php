@@ -1,12 +1,14 @@
 <?php
 //создаем timelapse
 
+include allserial.php;
+
 //глобальные переменные
 $date_today = date("Y-m-d");
 //$date_today = "2017-06-25";
 
-$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/2/';
-$spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/2/';
+$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
+$spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
 
 //$path = '/home/pi/beward/penta/2017-07-20/beward_penta/1/';
 //$spath = 'http://192.168.1.200/pi/2017-07-20/beward_penta/1/';
@@ -187,6 +189,7 @@ foreach($meta as $key => $value)
 				$picture = $spath . $value;
 				echo "<img src='$picture' width=24% />";
 				
+
 				$a = 0;
 			}
 
@@ -292,7 +295,21 @@ $coun = 0;
 		}
 	
 return $numer;
-}		
+}	
+
+function show_img_html($show_mas)
+{
+//функция выводит массив с картинками.
+	global $path, $spath;
+//var_dump($show_mas);
+	foreach($show_mas as $value)
+	
+	{
+		$picture = $spath . $value;
+		echo "<img src='$picture' width=20% />";
+	}
+
+}	
 
 
 function serial_show()
@@ -334,11 +351,6 @@ for ($seriya = $m_serial; $seriya <= $coun; $seriya++)
 //вычисляем две переменные с какого номера начинать и каким заканчивать.
 $lim = $numer[$seriya];
 
-//if ( $coun == 0 )
-//	{
-//	$lim = 0;
-//	}
-
 
 if  ( $seriya == ( $coun ) )
 	{
@@ -351,16 +363,40 @@ if ( $seriya == 0)
 	}
 	
 
-		for($i=$begin; $i <= $lim; $i++)
+		for($i=$begin; $i < $lim; $i++)
 			{
 		
 				$current_serial[] = $f_name[$i];
+
 			}
-echo "номер серии " . ( $seriya +1 );
+
+			$super = $current_serial;
+			sort($super);
+			var_dump($super);
+//echo "номер серии " . ( $seriya +1 );
+			$str = $seriya + 1;
+			$str_form = "номер серии " . $str;
+			$sum_in_serial = count($current_serial);
+
+echo "<form action='' method=post>";
+echo "<input type='submit' name='$str' value='$str_form'>";
+echo "</form>";
+echo "всего в серии " . $sum_in_serial . " элемента";
+var_dump ($current_serial);
+
+
+
+
+
+
 echo "<br>";
 							
-					if ( count($current_serial) > 12 )
+//					if ( count($current_serial) > 12 )
+						if ( $sum_in_serial > 12 )
 					{
+		//				var_dump($current_serial);
+	#					all_serial_show($current_serial);
+				echo "<br>";
 	
 	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
 	//$mediana = ($current_count = count($current_serial)/2);
@@ -375,11 +411,23 @@ echo "<br>";
 				$show_current[4] =  $current_serial[$mediana+5];
 		
 //выводим на экран нашу серию картинок. Здесь можно сделать функцию. Так как эта конструкция часто используется
-	foreach($show_current as $value)
-	{
-		$picture = $spath . $value;
-		echo "<img src='$picture' width=20% />";
-	}
+	//foreach($show_current as $value)
+	
+	//{
+	//	$picture = $spath . $value;
+	//	echo "<img src='$picture' width=20% />";
+	//}
+
+show_img_html($show_current);
+
+if ($_POST[$str]) {
+show_img_html($super);	
+}
+
+
+
+
+
 					}
 					else
 					{	//var_dump($current_serial);
@@ -400,15 +448,30 @@ echo "<br>";
 						}
 						echo "<br>";
 					}
+
+
+
+
 // обнуляем массив с текущим набором файлов
+$last_serial = $current_serial;					
 $current_serial = [];
+$sum_in_serial = 0;
 }
+
+
+
 }
 else 
 	{ 
 	echo "<br>";
 	echo "серий не обнаружено или что-то пошло не так.";
 	}
+
+//if ($_POST[allserial]) {
+//show_img_html($last_serial);	
+//}
+
+
 }
 
 function full_serial($mas_serial)
@@ -466,6 +529,11 @@ if(isset($all)) {
 serial_show();
 }
 
+if ($_POST[allserial]) {
+
+show_img_html($current_serial);	
+
+}
 
 
 ?>
