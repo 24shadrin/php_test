@@ -3,26 +3,18 @@
 
 //глобальные переменные
 $date_today = date("Y-m-d");
-//echo $date_today;
+//$date_today = "2017-06-25";
+
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
-//$spath = $path;
-//$spath = $path;
-
-
-//$path = '/var/www/sm/timelapse/penta/';
 $spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
 
-//echo $path;
+//$path = '/home/pi/beward/penta/2017-07-20/beward_penta/1/';
+//$spath = 'http://192.168.1.200/pi/2017-07-20/beward_penta/1/';
 
 function search_files()
 //ищет файлы в целевой папке, возвращает массив с файлами
 {
 global $path, $spath;
-//	{
-//$path = '/var/www/sm/timelapse/penta/';
-//$path = '/home/pi/beward/penta/2017-05-03/beward_penta/1/';
-//$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/;
-//$spath = 'penta/';
 
 foreach (glob($path . '*.jpg') as $value)
 {
@@ -30,104 +22,15 @@ foreach (glob($path . '*.jpg') as $value)
 
 }
 
-//var_dump($full_path_files);
-//echo "<br>";
-
 foreach ($full_path_files as $value)
 {
 	$split_files = explode("/", $value);
 	$files[] = $split_files[(count($split_files) - 1)];
 }
 
-
-//$files = explode('/', $full_path_files);
-
-//if ($list = scandir($path))
-
-//{
-//if ($list != false)
-//{
-
-	
-//		foreach ($list as $value)
-//	{
-//		if (($value != '.') && ($value != '..'))
-//		{
-//				$files[] = $value;
-		
-//		}
-
-//	}
-
-//}
-//}
-//}
 return $files;
-//var_dump($files);
 
-//var_dump($files);
 }
-
-/*
-function show_picture($lim,$cf)
-{
-//$path = '/home/pi/beward/penta/2017-04-18/beward_penta/1/';
-$path = '/var/www/sm/timelapse/penta2/';
-$spath = 'penta2/';
-$back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
-
-
-if ($list = opendir($path))
-{
-if ($list != false)
-{
-
-	while((($file = readdir($list)) !== false))	
-
-	{
-		if (($file != '.') && ($file != '..'))
-		{
-				$files[] = $file;
-
-		}
-
-	}
-
-	
-	sort($files);
-//	var_dump($files);
-if ($lim == 'all') 
-{
-			foreach($files as $value)
-			{			
-			$picture = $spath . $value;
-			echo "<img src='$picture' width=24% />";
-			}
-echo "<br>";
-echo $back_url;
-			
-}
-else
-{
-				for($i = 0; $i < $lim; $i++)
-				{				
-			$picture = $spath . $files[$i];
-				echo "<img src='$picture' width=24% />";
-				}
-echo "<br>";
-echo $back_url;
-
-				
-}
-closedir($list);
-}
-}
-else 
-{
-	echo "folder with content not found";
-}
-}
-*/
 
 function print_form()
 {
@@ -197,6 +100,7 @@ if ( $file_count > $lim )
 				
 echo "<br>";
 echo $back_url;
+
 }
 	else 
 {
@@ -215,24 +119,21 @@ global $path, $spath;
 //$meta = date("F d Y H:i:s", filectime($path  .  $name));
 
 echo "<br>";
-//echo $meta;
-//$path = '/var/www/sm/timelapse/penta/';
+
 			
 			if ( info_folder() > 0)
 				
 {
 $files = search_files();
 
-//var_dump($files);
+
 
 	foreach($files as $value)
 		{
-//			$filo[] = $value;
+
 			$meta[filemtime($path . $value )] = $value;
 			
 		}
-
-//var_dump($meta);
 
 ksort($meta);
 
@@ -278,7 +179,7 @@ foreach($files as $value)
 		ksort($meta);
 
 $cur_time = time();
-//var_dump($cur_time);
+
 foreach($meta as $key => $value)
 		{
 			if ( ($cur_time - $key) < $tm)
@@ -288,7 +189,7 @@ foreach($meta as $key => $value)
 				
 				$a = 0;
 			}
-//			else {
+
 				if ( ($cur_time - $key) > $tm)
 				{
 					$a = 1;
@@ -307,7 +208,6 @@ foreach($meta as $key => $value)
 					echo $back_url;
 					
 					}
-//		return;
 
 		}	
 		else 
@@ -339,9 +239,193 @@ echo '<input type="submit" value="применить" />';
 echo "</select>";
 echo "</form>";
 }
+
+function serial()
+{
+//функция делит фотографии на серии, возвращает массив в котором храним индексы где разница менжду файлами более 5 секунд
+
+	global $path, $spath;
+
+	$files = search_files();
+	
+	
+	foreach($files as $value)
+		{
+			$md[] = filemtime($path . $value);
+			$f_name[] = $value;
+		}
+
+
+
+$i_max = count($md);
+$j_max = count($f_name);
+
+#echo "количество элементов в массивах файлов и их размеров";
+#echo "<br>";
+#echo $i_max;
+#echo "<br>";
+#echo $j_max;
+
+$coun = 0;
+
+//ходим циклом по массиву с датой запоминаем индексы где разница между датой больше 10 секунд
+		for($i=0; $i < $i_max; $i++)
+		{
+			if (($md[$i] - $md[$i+1]) > -10 ) 
+
+			{
+			//  получается здесь ничего не делаем!!!
+//			$files_serial[] = $f_name[$i];
+		
+
+			}
+		else
+		{
+//счетчик серий. Сколько у нас получилось таких пачек файлов с разницей создания меньше 5 секунд		
+			$coun++;
+
+//это массив с индексами где разница с файлами уже больше 5 секунд
+			$numer[] = $i+1;
+
+
+		}
+		}
+	
+return $numer;
+}		
+
+
+function serial_show()
+{
+//функция выводит по 5 картинок из всех серий за текущий день.
+
+global $path, $spath;
+$numer = serial();
+#var_dump($numer);
+$coun = count($numer);
+
+$f_name = search_files();
+	if ((count($f_name)) > 0 )
+//	if ((count($numer)) > 0 )
+	{
+
+echo "<br>";
+echo "сегодня зафиксировано " . ( $coun + 1 ) . " серий";
+echo "<br>";
+
+
+
+// Этот большой цикл выводит по 5 картинок из каждой серии
+
+//for ($seriya=0; $seriya <= $coun; $seriya++)
+$m_serial = ( $coun - 5 );
+if ( $m_serial < 0 ) 
+{
+	$m_serial = 0;
+}
+
+for ($seriya = $m_serial; $seriya <= $coun; $seriya++)
+{
+//$a = filemtime(($f_name[$coun]);
+//выводим номер серии. +1 делаем для удобства. Номера в массиве с 0. Человеку удобней с 1.
+//echo "номер серии " . ( $seriya +1 );
+//echo "<br>";
+
+//вычисляем две переменные с какого номера начинать и каким заканчивать.
+$lim = $numer[$seriya];
+
+//if ( $coun == 0 )
+//	{
+//	$lim = 0;
+//	}
+
+
+if  ( $seriya == ( $coun ) )
+	{
+	$lim = count($f_name);
+	}
+$begin = $numer[$seriya - 1];
+if ( $seriya == 0)
+	{
+	$begin = 0;
+	}
+	
+
+		for($i=$begin; $i <= $lim; $i++)
+			{
+		
+				$current_serial[] = $f_name[$i];
+			}
+echo "номер серии " . ( $seriya +1 );
+echo "<br>";
+							
+					if ( count($current_serial) > 12 )
+					{
+	
+	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
+	//$mediana = ($current_count = count($current_serial)/2);
+				$mediana = (count($current_serial)/2);
+
+
+//создаем массив, который будем выводить на экран. Добавляем в него 5 файлов около медианы
+				$show_current[0] =  $current_serial[$mediana-5];
+				$show_current[1] =  $current_serial[$mediana-3];
+				$show_current[2] =  $current_serial[$mediana];
+				$show_current[3] =  $current_serial[$mediana+3];
+				$show_current[4] =  $current_serial[$mediana+5];
+		
+//выводим на экран нашу серию картинок. Здесь можно сделать функцию. Так как эта конструкция часто используется
+	foreach($show_current as $value)
+	{
+		$picture = $spath . $value;
+		echo "<img src='$picture' width=20% />";
+	}
+					}
+					else
+					{	//var_dump($current_serial);
+//						$current_serial = array_pop($current_serial);
+				
+//						foreach($current_serial as $value)
+						for($i=0; $i< (count($current_serial) - 1); $i++)
+//						for($i=0; $i< 5; $i++)
+						{
+//							$picture = $spath . $value;
+								if ( $i < 5 ) {
+							$picture = $spath . $current_serial[$i];
+							
+//							echo $value . "<br>";
+
+							echo "<img src='$picture' width=20% />";
+												}	
+						}
+						echo "<br>";
+					}
+// обнуляем массив с текущим набором файлов
+$current_serial = [];
+}
+}
+else 
+	{ 
+	echo "<br>";
+	echo "серий не обнаружено или что-то пошло не так.";
+	}
+}
+
+function full_serial($mas_serial)
+{
+global $path, $spath;
+	foreach($mas_serial as $value)
+	{
+		$picture = $spath . $value;
+		echo "<img src='$picture' width=20% />";
+	}
+}
+
+
+
 //точка входа в программу-----------------------------------------------------------------------------------
 
-echo '<link rel="stylesheet" href="css/foundation.css" /> ';
+//echo '<link rel="stylesheet" href="css/foundation.css" /> ';
 
 if (isset($_POST['limit']))
 {
@@ -368,10 +452,19 @@ else
 	echo "в папке нет элементов jpg или что-то пошло не так";
 }
 meta_file();
+serial_show();
 
 
+
+
+echo "<form>";
+//echo "<input type='text' name='text'>";
+echo "<input type='submit' name='all' value='Все серии'>";
+echo "</form> ";
 }
-
+if(isset($all)) {
+serial_show();
+}
 
 
 
