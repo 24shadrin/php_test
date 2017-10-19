@@ -1,7 +1,7 @@
 <?php
 //создаем timelapse
 
-include allserial.php;
+//include allserial.php;
 
 //глобальные переменные
 $date_today = date("Y-m-d");
@@ -10,8 +10,8 @@ $date_today = date("Y-m-d");
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
 
-//$path = '/home/pi/beward/penta/2017-10-12/beward_penta/1/';
-//$spath = 'http://192.168.1.200/pi/2017-10-12/beward_penta/1/';
+//$path = '/home/pi/beward/penta/test/beward_penta/1/';
+//$spath = 'http://192.168.1.200/pi/test/beward_penta/1/';
 
 function search_files()
 //ищет файлы в целевой папке, возвращает массив с файлами
@@ -264,11 +264,11 @@ $i_max = count($md);
 $j_max = count($f_name);
 
 echo "количество элементов в массивах файлов и их размеров";
-echo "<br>";
-echo $i_max;
-echo "<br>";
-echo $j_max;
-echo "<br>";
+//echo "<br>";
+//echo $i_max;
+//echo "<br>";
+//echo $j_max;
+//echo "<br>";
 
 $coun = 0;
 
@@ -320,7 +320,7 @@ function serial_show()
 global $path, $spath;
 #мыссив с индексами где разница между файлами более 5 секунд
 $numer = serial();
-var_dump($numer);
+//var_dump($numer);
 #количество серий
 $coun = count($numer);
 
@@ -338,7 +338,8 @@ echo "<br>";
 // Этот большой цикл выводит по 5 картинок из каждой серии
 
 //for ($seriya=0; $seriya <= $coun; $seriya++)
-$m_serial = ( $coun - 5 );
+//$m_serial = ( $coun - 5 );
+$m_serial = 0;
 if ( $m_serial < 0 ) 
 {
 	$m_serial = 0;
@@ -374,11 +375,6 @@ if ( $seriya == 0)
 
 			}
 
-
-
-//			$super = $current_serial;
-//			sort($super);
-//			var_dump($super);
 //echo "номер серии " . ( $seriya +1 );
 			$str = $seriya + 1;
 //			$str_form = "номер серии " . $str;
@@ -398,58 +394,10 @@ foreach($current_serial as $key)
 echo "<input type='submit' name='$str' value='$str_form'>";
 echo "</form>";
 
-//if (isset($_POST['str']))
-/*
-	if ($_POST[str])
-{
-foreach($current_serial as $key)
-{
-echo "<form action='allserial.php' method=post>";
-//echo "<input type=hidden name=mas[] value=$key>";
-echo "<input type=hidden name=mass[] value=$key>";
-//echo "</form>";
-}
-
-}
-//echo "всего в серии " . $sum_in_serial . " jpg";
-////var_dump ($current_serial);
-
-//echo "<br>";
-//if ($_POST[$str]) {
-//show_img_html($current_serial);	
-
-//foreach ($current_serial as $key)
-//{
-//echo "<form action='allserial.php' method='post'>";
-//echo	"<input type=hidden name=mas[] value=$key>";
-//}
-
-//$str  = serialize($current_serial);
-//allserial.php($current_serial);
-	//$test=24;
-//$_POST[$str] = $current_serial;
-//Header ("Location: http://192.168.1.200/sm/timelapse/allserial.php");
-//	echo "<form action='allserial.php' method='post'>";
-else{
-
-//return;
-echo "don't work";
-}
-
-*/
-
-
-
-
-
-
-							
-//					if ( count($current_serial) > 12 )
+				
 						if ( $sum_in_serial > 12 )
 					{
-		//				var_dump($current_serial);
-	#					all_serial_show($current_serial);
-	//			echo "<br>";
+
 	
 	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
 	//$mediana = ($current_count = count($current_serial)/2);
@@ -464,12 +412,6 @@ echo "don't work";
 				$show_current[4] =  $current_serial[$mediana+5];
 		
 //выводим на экран нашу серию картинок. Здесь можно сделать функцию. Так как эта конструкция часто используется
-	//foreach($show_current as $value)
-	
-	//{
-	//	$picture = $spath . $value;
-	//	echo "<img src='$picture' width=20% />";
-	//}
 
 show_img_html($show_current);
 
@@ -484,7 +426,8 @@ show_img_html($show_current);
 //						$current_serial = array_pop($current_serial);
 				
 //						foreach($current_serial as $value)
-						for($i=0; $i< (count($current_serial) - 1); $i++)
+//						for($i=0; $i< (count($current_serial) - 1); $i++)
+							for($i=0; $i< (count($current_serial)); $i++)
 //						for($i=0; $i< 5; $i++)
 						{
 //							$picture = $spath . $value;
@@ -503,9 +446,9 @@ show_img_html($show_current);
 
 
 // обнуляем массив с текущим набором файлов
-$last_serial = $current_serial;					
+					
 $current_serial = [];
-$sum_in_serial = 0;
+
 }
 
 
@@ -517,9 +460,7 @@ else
 	echo "серий не обнаружено или что-то пошло не так.";
 	}
 
-//if ($_POST[allserial]) {
-//show_img_html($last_serial);	
-//}
+
 
 
 }
