@@ -381,23 +381,62 @@ if ( $seriya == 0)
 //			var_dump($super);
 //echo "номер серии " . ( $seriya +1 );
 			$str = $seriya + 1;
-			$str_form = "номер серии " . $str;
+//			$str_form = "номер серии " . $str;
 			$sum_in_serial = count($current_serial);
-echo "<br>";
+			$str_form = "номер серии " .$str .  " всего в серии " . $sum_in_serial . " эл.";
+//echo "<br>";
 
-echo "<form action='' method=post>";
+
+//echo "<form action='' method=post>";
+
+foreach($current_serial as $key)
+{
+
+	echo "<form action='allserial.php' method=post>";
+	echo "<input type=hidden name=mass[] value=$key>";
+}
 echo "<input type='submit' name='$str' value='$str_form'>";
 echo "</form>";
-echo "всего в серии " . $sum_in_serial . " jpg";
-////var_dump ($current_serial);
 
-echo "<br>";
-if ($_POST[$str]) {
-show_img_html($current_serial);	
-return;
+//if (isset($_POST['str']))
+/*
+	if ($_POST[str])
+{
+foreach($current_serial as $key)
+{
+echo "<form action='allserial.php' method=post>";
+//echo "<input type=hidden name=mas[] value=$key>";
+echo "<input type=hidden name=mass[] value=$key>";
+//echo "</form>";
 }
 
+}
+//echo "всего в серии " . $sum_in_serial . " jpg";
+////var_dump ($current_serial);
 
+//echo "<br>";
+//if ($_POST[$str]) {
+//show_img_html($current_serial);	
+
+//foreach ($current_serial as $key)
+//{
+//echo "<form action='allserial.php' method='post'>";
+//echo	"<input type=hidden name=mas[] value=$key>";
+//}
+
+//$str  = serialize($current_serial);
+//allserial.php($current_serial);
+	//$test=24;
+//$_POST[$str] = $current_serial;
+//Header ("Location: http://192.168.1.200/sm/timelapse/allserial.php");
+//	echo "<form action='allserial.php' method='post'>";
+else{
+
+//return;
+echo "don't work";
+}
+
+*/
 
 
 
@@ -410,7 +449,7 @@ return;
 					{
 		//				var_dump($current_serial);
 	#					all_serial_show($current_serial);
-				echo "<br>";
+	//			echo "<br>";
 	
 	//вычисляем медиану. Тоесть кол-во элементов в массиве текущей серии делим пополам
 	//$mediana = ($current_count = count($current_serial)/2);
