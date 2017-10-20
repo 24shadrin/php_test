@@ -391,7 +391,8 @@ foreach($current_serial as $key)
 	echo "<form action='allserial.php' method=post>";
 	echo "<input type=hidden name=mass[] value=$key>";
 }
-echo "<input type='submit' name='$str' value='$str_form'>";
+//echo '<a role="button" aria-label="submit form" href="#" class="button">Submit</a>';
+echo "<input type='submit' class='button' name='$str' value='$str_form'>";
 echo "</form>";
 
 				
@@ -480,6 +481,9 @@ global $path, $spath;
 //точка входа в программу-----------------------------------------------------------------------------------
 
 //echo '<link rel="stylesheet" href="css/foundation.css" /> ';
+echo '<link rel="stylesheet" href="css/foundation.css" /> ';
+
+//echo '<a role="button" aria-label="submit form" href="#" class="button">Submit</a>';
 
 if (isset($_POST['limit']))
 {
