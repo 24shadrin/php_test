@@ -1,5 +1,5 @@
 <?php
-
+echo '<link rel="stylesheet" href="css/foundation.css" /> ';
 global $path, $spath;
 $date_today = date("Y-m-d");
 
@@ -9,7 +9,7 @@ $spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
 //$path = '/home/pi/beward/penta/test/beward_penta/1/';
 //$spath = 'http://192.168.1.200/pi/test/beward_penta/1/';
 
-$back_url = '<a href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
+$back_url = '<a class=button href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
 
 $massiv = $_POST[mass];
 
