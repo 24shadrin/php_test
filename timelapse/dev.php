@@ -5,6 +5,7 @@
 
 //глобальные переменные
 $date_today = date("Y-m-d");
+$current_time = date("H:i:s");
 //$date_today = "2017-06-25";
 
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
@@ -507,13 +508,13 @@ global $path, $spath;
 }
 
 function items_of_serial()
-{ global $date_today;
+{ global $date_today, $current_time;
 $numer = serial();
 
 $coun = count($numer);
 
 echo "<br>";
-echo "сегодня $date_today зафиксировано " . ( $coun + 1 ) . " серий";
+echo "сегодня $date_today  $current_time зафиксировано " . ( $coun + 1 ) . " серий";
 echo "<br>";
 }
 
@@ -571,11 +572,11 @@ meta_file();
 //serial_show();
 //}
 
-if ($_POST[allserial]) {
+//if ($_POST[allserial]) {
 
-show_img_html($current_serial);	
+//show_img_html($current_serial);	
 
-}
+//}
 
 
 ?>
