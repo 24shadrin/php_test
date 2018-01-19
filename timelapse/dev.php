@@ -149,14 +149,14 @@ ksort($meta);
 
 //echo "время старшего файла " . $file_meta;
 echo "<br>";
-echo "имя старшего файла " .$file_name;
-echo "<br>";
+//echo "имя старшего файла " .$file_name;
+//echo "<br>";
 $f_meta = date("d m Y H:i:s", $file_meta);
 echo "крайнее движение ".  $f_meta;
-echo  "<br>";
-echo  "<br>";
+//echo  "<br>";
+//echo  "<br>";
 $picture = $spath . $file_name;
-echo "<img src='$picture' width=24% />";
+//echo "<img src='$picture' width=24% />";
 echo  "<br>";
 
 }
@@ -373,7 +373,10 @@ if ( $m_serial < 0 )
 {
 	$m_serial = 0;
 }
-echo $back_url;
+if ( $items !=1)
+	{
+		echo $back_url;
+	}
 for ($seriya = $m_serial; $seriya <= $coun; $seriya++)
 {
 //$a = filemtime(($f_name[$coun]);
@@ -482,7 +485,11 @@ show_img_html($show_current);
 $current_serial = [];
 
 }
-echo $back_url;
+if ( $items !=1)
+	{
+		echo $back_url;
+	}
+
 
 
 }
@@ -555,6 +562,8 @@ else
 	echo "в папке нет элементов jpg или что-то пошло не так";
 }
 meta_file();
+
+serial_show(1);
 
 //echo '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">последние 5</a>';
 
