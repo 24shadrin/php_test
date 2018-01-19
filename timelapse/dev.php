@@ -365,7 +365,7 @@ $f_name = search_files();
 		$m_serial = 0; 
 					}
 	else {
-$m_serial = ( $coun - $items );
+$m_serial = ( $coun - $items + 1 );
 		}
 //$m_serial = 0;
 if ( $m_serial < 0 ) 
@@ -537,7 +537,7 @@ else
 if (isset($_POST['item']))
 {
 //	show_pic_time($_POST['item']);
-	serial_show($_POST['item']-1);
+	serial_show($_POST['item']);
 }
 
 else{
@@ -557,7 +557,7 @@ meta_file();
 
 //echo '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">последние 5</a>';
 
-//serial_show(0);
+//serial_show(1);
 
 
 
@@ -567,9 +567,9 @@ meta_file();
 //echo "<input type='submit' name='all' value='Все серии'>";
 //echo "</form> ";
 }
-if(isset($all)) {
-serial_show();
-}
+//if(isset($all)) {
+//serial_show();
+//}
 
 if ($_POST[allserial]) {
 
