@@ -9,6 +9,7 @@ $date_today = date("Y-m-d");
 
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
+$back_url = '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
 
 //$path = '/home/pi/beward/penta/test/beward_penta/1/';
 //$spath = 'http://192.168.1.200/pi/test/beward_penta/1/';
@@ -36,9 +37,9 @@ return $files;
 
 function print_form()
 {
-echo "привет. Для вас доступно.";
+echo "<p class='text-cente' >привет. Для вас доступно. </p>";
 
-echo '<form action="pic.php" method="post">';
+echo '<form action="dev.php" method="post">';
 echo "<p> сколько показать? </p>";
 echo "<select name='limit'>";
 echo "<option value='5'> 5 </option>";
@@ -46,7 +47,7 @@ echo "<option value='6'> 6 </option>";
 echo "<option value='10'> 10 </option>";
 echo "<option value='15'> 15 </option>";
 echo "<option value='all'> все </option>";
-echo '<input type="submit" value="применить" />';
+echo '<input type="submit" class="button" value="применить" />';
 echo "</select>";
 echo "</form>";
 }
@@ -68,7 +69,7 @@ function show_pic($lim)
 //показывает выбранное количество файлов
 
 global $path, $spath;
-$back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
+$back_url = '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
 
 if ( info_folder() > 0 )
 {
@@ -166,7 +167,7 @@ function show_pic_time($tm)
 
 global $path, $spath;
 
-$back_url = '<a href="http://192.168.1.200/sm/timelapse/pic.php">back</a>';
+$back_url = '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
 		if ( info_folder() > 0)
 	{
 $files = search_files();
@@ -226,9 +227,9 @@ function print_form_time()
 {
 echo "показать за последние ";
 
-echo '<form action="pic.php" method="post">';
+echo '<form  action="dev.php" method="post" >';
 
-echo "<select name='item'>";
+echo "<select name='item' >";
 echo "<option value='300'> 5 минут </option>";
 echo "<option value='900'> 15 минут </option>";
 echo "<option value='1800'> 30 минут </option>";
@@ -238,7 +239,28 @@ echo "<option value='10800'> 3 часа </option>";
 echo "<option value='21600'> 6 часов </option>";
 
 
-echo '<input type="submit" value="применить" />';
+echo '<input type="submit" class="button" value="применить" />';
+echo "</select>";
+echo "</form>";
+}
+
+function print_serial_select()
+{
+echo "количество серий ";
+
+echo '<form  action="dev.php" method="post" >';
+
+echo "<select name='item' >";
+echo "<option value='5'> 5 </option>";
+echo "<option value='10'> 10 </option>";
+echo "<option value='15'> 15 </option>";
+echo "<option value='20'> 20 </option>";
+echo "<option value='25'> 25 </option>";
+echo "<option value='30'> 30 </option>";
+echo "<option value='0'> все </option>";
+
+
+echo '<input type="submit" class="button" value="применить" />';
 echo "</select>";
 echo "</form>";
 }
@@ -263,7 +285,7 @@ function serial()
 $i_max = count($md);
 $j_max = count($f_name);
 
-echo "количество элементов в массивах файлов и их размеров";
+//echo "количество элементов в массивах файлов и их размеров";
 //echo "<br>";
 //echo $i_max;
 //echo "<br>";
@@ -301,23 +323,24 @@ return $numer;
 function show_img_html($show_mas)
 {
 //функция выводит массив с картинками.
-	global $path, $spath;
+	global $path, $spath, $back_url;
 //var_dump($show_mas);
+//echo $back_url;
 	foreach($show_mas as $value)
 	
 	{
 		$picture = $spath . $value;
 		echo "<img src='$picture' width=20% />";
 	}
-
+//echo $back_url;
 }	
 
 
-function serial_show()
+function serial_show($items)
 {
 //функция выводит по 5 картинок из всех серий за текущий день.
 
-global $path, $spath;
+global $path, $spath, $back_url;
 #мыссив с индексами где разница между файлами более 5 секунд
 $numer = serial();
 //var_dump($numer);
@@ -329,22 +352,27 @@ $f_name = search_files();
 //	if ((count($numer)) > 0 )
 	{
 
-echo "<br>";
-echo "сегодня зафиксировано " . ( $coun + 1 ) . " серий";
-echo "<br>";
+//echo "<br>";
+//echo "сегодня зафиксировано " . ( $coun + 1 ) . " серий";
+//echo "<br>";
 
 
 
 // Этот большой цикл выводит по 5 картинок из каждой серии
 
 //for ($seriya=0; $seriya <= $coun; $seriya++)
-//$m_serial = ( $coun - 5 );
-$m_serial = 0;
+	if ( $items==0 ) {
+		$m_serial = 0; 
+					}
+	else {
+$m_serial = ( $coun - $items );
+		}
+//$m_serial = 0;
 if ( $m_serial < 0 ) 
 {
 	$m_serial = 0;
 }
-
+echo $back_url;
 for ($seriya = $m_serial; $seriya <= $coun; $seriya++)
 {
 //$a = filemtime(($f_name[$coun]);
@@ -428,6 +456,7 @@ show_img_html($show_current);
 				
 //						foreach($current_serial as $value)
 //						for($i=0; $i< (count($current_serial) - 1); $i++)
+//	echo $back_url;
 							for($i=0; $i< (count($current_serial)); $i++)
 //						for($i=0; $i< 5; $i++)
 						{
@@ -442,6 +471,7 @@ show_img_html($show_current);
 						}
 						echo "<br>";
 					}
+//	echo $back_url;
 
 
 
@@ -451,7 +481,7 @@ show_img_html($show_current);
 $current_serial = [];
 
 }
-
+echo $back_url;
 
 
 }
@@ -476,6 +506,16 @@ global $path, $spath;
 	}
 }
 
+function items_of_serial()
+{ global $date_today;
+$numer = serial();
+
+$coun = count($numer);
+
+echo "<br>";
+echo "сегодня $date_today зафиксировано " . ( $coun + 1 ) . " серий";
+echo "<br>";
+}
 
 
 //точка входа в программу-----------------------------------------------------------------------------------
@@ -489,18 +529,22 @@ if (isset($_POST['limit']))
 {
 //	show_picture($_POST['limit']);
 	show_pic($_POST['limit']);
+//serial_show($_POST['limit']);
 }
 
 else 
 	
 if (isset($_POST['item']))
 {
-	show_pic_time($_POST['item']);
+//	show_pic_time($_POST['item']);
+	serial_show($_POST['item']-1);
 }
 
 else{
-print_form();
-print_form_time();
+items_of_serial();
+//print_form();
+//print_form_time();
+print_serial_select();
 if ( info_folder() > 0 )
 {
 echo "в папке " . info_folder() . " элементов jpg";
@@ -510,15 +554,18 @@ else
 	echo "в папке нет элементов jpg или что-то пошло не так";
 }
 meta_file();
-serial_show();
+
+//echo '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">последние 5</a>';
+
+//serial_show(0);
 
 
 
 
-echo "<form>";
+//echo "<form>";
 //echo "<input type='text' name='text'>";
-echo "<input type='submit' name='all' value='Все серии'>";
-echo "</form> ";
+//echo "<input type='submit' name='all' value='Все серии'>";
+//echo "</form> ";
 }
 if(isset($all)) {
 serial_show();
