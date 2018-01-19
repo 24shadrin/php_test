@@ -332,7 +332,10 @@ function show_img_html($show_mas)
 	{
 		$picture = $spath . $value;
 		echo "<img src='$picture' width=20% />";
+		
 	}
+	echo "<br>";
+	echo "<br>";
 //echo $back_url;
 }	
 
@@ -565,27 +568,9 @@ meta_file();
 
 serial_show(1);
 
-//echo '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">последние 5</a>';
 
-//serial_show(1);
-
-
-
-
-//echo "<form>";
-//echo "<input type='text' name='text'>";
-//echo "<input type='submit' name='all' value='Все серии'>";
-//echo "</form> ";
 }
-//if(isset($all)) {
-//serial_show();
-//}
 
-//if ($_POST[allserial]) {
-
-//show_img_html($current_serial);	
-
-//}
 
 
 ?>
