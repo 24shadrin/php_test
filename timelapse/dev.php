@@ -342,7 +342,7 @@ function show_img_html($show_mas)
 
 function serial_show($items)
 {
-//функция выводит по 5 картинок из всех серий за текущий день.
+//функция выводит по 5 картинок из количества items серий за текущий день.
 
 global $path, $spath, $back_url;
 #мыссив с индексами где разница между файлами более 5 секунд
@@ -365,9 +365,11 @@ $f_name = search_files();
 // Этот большой цикл выводит по 5 картинок из каждой серии
 
 //for ($seriya=0; $seriya <= $coun; $seriya++)
-	if ( $items==0 ) {
+// Если items нулевой то выводим весь день.		
+	if ( $items==0 ) 
+	{
 		$m_serial = 0; 
-					}
+	}
 	else {
 $m_serial = ( $coun - $items + 1 );
 		}
@@ -521,7 +523,10 @@ global $path, $spath;
 }
 
 function items_of_serial()
-{ global $date_today, $current_time;
+{
+//функция выводит информацию скоколь зафиксирована серий за сегодня. 
+global $date_today, $current_time;
+
 $numer = serial();
 
 $coun = count($numer);
@@ -529,7 +534,7 @@ $coun = count($numer);
 	if ( $coun == 0 ) 
 	{
 		echo "<br>";
-		echo "Сегодня $date_today  $current_tim серий не обнаружено ";
+		echo "Сегодня $date_today  $current_time серий не обнаружено ";
 		echo "<br>";
 	}
 	else
