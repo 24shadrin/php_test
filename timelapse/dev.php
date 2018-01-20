@@ -247,7 +247,7 @@ echo "</form>";
 
 function print_serial_select()
 {
-echo "количество серий ";
+echo "выбирите количество серий для отображения ";
 
 echo '<form  action="dev.php" method="post" >';
 
@@ -488,6 +488,7 @@ show_img_html($show_current);
 $current_serial = [];
 
 }
+
 if ( $items !=1)
 	{
 		echo $back_url;
@@ -500,6 +501,8 @@ else
 	{ 
 	echo "<br>";
 	echo "серий не обнаружено или что-то пошло не так.";
+	echo "<br>";
+	echo $back_url;
 	}
 
 
@@ -523,9 +526,18 @@ $numer = serial();
 
 $coun = count($numer);
 
+	if ( $coun == 0 ) 
+	{
+		echo "<br>";
+		echo "Сегодня $date_today  $current_tim серий не обнаружено ";
+		echo "<br>";
+	}
+	else
+	{
 echo "<br>";
 echo "сегодня $date_today  $current_time зафиксировано " . ( $coun + 1 ) . " серий";
 echo "<br>";
+	}
 }
 
 
@@ -559,6 +571,7 @@ print_serial_select();
 if ( info_folder() > 0 )
 {
 echo "в папке " . info_folder() . " элементов jpg";
+serial_show(3);
 }
 else
 {
@@ -566,7 +579,7 @@ else
 }
 meta_file();
 
-serial_show(1);
+//serial_show(1);
 
 
 }
