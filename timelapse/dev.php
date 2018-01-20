@@ -72,6 +72,7 @@ function show_pic($lim)
 global $path, $spath;
 $back_url = '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
 
+
 if ( info_folder() > 0 )
 {
 $files = search_files();
@@ -552,44 +553,41 @@ echo "<br>";
 echo '<link rel="stylesheet" href="css/foundation.css" /> ';
 
 //echo '<a role="button" aria-label="submit form" href="#" class="button">Submit</a>';
-
+/*
 if (isset($_POST['limit']))
 {
 //	show_picture($_POST['limit']);
-	show_pic($_POST['limit']);
+//	show_pic($_POST['limit']);
 //serial_show($_POST['limit']);
 }
 
 else 
-	
+*/	
 if (isset($_POST['item']))
 {
 //	show_pic_time($_POST['item']);
 	serial_show($_POST['item']);
 }
 
-else{
-items_of_serial();
+	else{
+			items_of_serial();
 //print_form();
 //print_form_time();
-print_serial_select();
-if ( info_folder() > 0 )
-{
-echo "в папке " . info_folder() . " элементов jpg";
-meta_file();
-serial_show(3);
-}
-else
-{
-	echo "в папке нет элементов jpg или что-то пошло не так";
-}
+			print_serial_select();
+				if ( info_folder() > 0 )
+				{
+						echo "в папке " . info_folder() . " элементов jpg";
+						meta_file();
+						serial_show(3);
+				}
+					else
+						{
+							echo "в папке нет элементов jpg или что-то пошло не так";
+						}
 //meta_file();
 
 //serial_show(1);
 
-
-}
-
-
+		}
 
 ?>
