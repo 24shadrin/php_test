@@ -6,7 +6,7 @@
 //глобальные переменные
 $date_today = date("Y-m-d");
 $current_time = date("H:i:s");
-//$date_today = "2017-06-25";
+//$date_today = "2018-01-20";
 
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
@@ -378,7 +378,7 @@ if ( $m_serial < 0 )
 {
 	$m_serial = 0;
 }
-if ( $items !=1)
+if ( $items !=3)
 	{
 		echo $back_url;
 	}
@@ -491,7 +491,7 @@ $current_serial = [];
 
 }
 
-if ( $items !=1)
+if ( $items !=3)
 	{
 		echo $back_url;
 	}
@@ -576,13 +576,14 @@ print_serial_select();
 if ( info_folder() > 0 )
 {
 echo "в папке " . info_folder() . " элементов jpg";
+meta_file();
 serial_show(3);
 }
 else
 {
 	echo "в папке нет элементов jpg или что-то пошло не так";
 }
-meta_file();
+//meta_file();
 
 //serial_show(1);
 
