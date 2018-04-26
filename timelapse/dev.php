@@ -525,7 +525,7 @@ global $path, $spath;
 
 function items_of_serial()
 {
-//функция выводит информацию скоколь зафиксирована серий за сегодня. 
+//функция выводит информацию сколько зафиксирована серий за сегодня. 
 global $date_today, $current_time;
 
 $numer = serial();
@@ -546,7 +546,29 @@ echo "<br>";
 	}
 }
 
+function calendar()
+{
+echo "<html>";
+echo "<head>";
+echo "<title></title>";
+echo '<link rel="stylesheet" href="uikit/css/uikit.min.css" />';
+echo '<link rel="stylesheet" href="uikit/css/components/datepicker.min.css" />';
+echo '<script src="uikit/jquery.js"></script>';
+echo '<script src="uikit/js/uikit.min.js"></script>';
+echo '<script src="uikit/js/components/datepicker.js"></script>';
+echo '<script src="uikit/js/components/form-select.js"></script>';
+echo "</head>";
 
+
+echo '<form class="uk-form">';
+echo '<input type="text"' . 'data-uk-datepicker=' . "{format:" . "'DD.MM.YYYY'}" . ">";
+//echo ""<input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}">"";
+echo '<input type="submit" class="button" value="применить" />';
+echo "</form>";
+
+echo "</html";
+
+}
 //точка входа в программу-----------------------------------------------------------------------------------
 
 //echo '<link rel="stylesheet" href="css/foundation.css" /> ';
@@ -567,10 +589,12 @@ if (isset($_POST['item']))
 {
 //	show_pic_time($_POST['item']);
 	serial_show($_POST['item']);
+//	calendar();
 }
 
 	else{
 			items_of_serial();
+			
 //print_form();
 //print_form_time();
 			print_serial_select();
@@ -579,6 +603,7 @@ if (isset($_POST['item']))
 						echo "в папке " . info_folder() . " элементов jpg";
 						meta_file();
 						serial_show(3);
+//						calendar();
 				}
 					else
 						{
