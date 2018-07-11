@@ -164,7 +164,7 @@ echo  "<br>";
 
 }
 }
-
+/*
 function show_pic_time($tm)
 {
 // выводит файла за интервал времени
@@ -226,6 +226,7 @@ echo $back_url;
 		}
 	}
 	
+*/
 
 function print_form_time()
 {
@@ -298,8 +299,17 @@ function serial($dt)
 //функция делит фотографии на серии, возвращает массив в котором храним индексы где разница менжду файлами более 5 секунд
 
 //	global $path, $spath;
+global $date_today;
+
+if ( $dt == 0 ) 
+	{
+	$dt = $date_today;
+	
+	}
+	
 	$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
 	$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
+	
 	$files = search_files($dt);
 	
 	
@@ -375,12 +385,18 @@ function show_img_html($show_mas, $dt)
 
 function serial_show($items,$dt)
 {
+	items_of_serial($dt);
 //функция выводит по 5 картинок из количества items серий за текущий день.
 
-global  $back_url;
+global  $back_url,$date_today;
 
 $path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
+
+if ( $dt == 0 )
+{
+$dt = $date_today;	
+}
 
 //echo $path;
 
@@ -466,6 +482,7 @@ foreach($current_serial as $key)
 
 	echo "<form action='allserial.php' method=post>";
 	echo "<input type=hidden name=mass[] value=$key>";
+	echo "<input type=hidden name=date_path value=$dt>";
 }
 //echo '<a role="button" aria-label="submit form" href="#" class="button">Submit</a>';
 echo "<input type='submit' class='button' name='$str' value='$str_form'>";
@@ -550,7 +567,7 @@ else
 
 
 }
-
+/*
 function full_serial($mas_serial)
 {
 global $path, $spath;
@@ -560,13 +577,14 @@ global $path, $spath;
 		echo "<img src='$picture' width=20% />";
 	}
 }
+*/
 
-function items_of_serial()
+function items_of_serial($dt)
 {
-//функция выводит информацию сколько зафиксирована серий за сегодня. 
+//функция выводит информацию сколько зафиксирована серий. 
 global $date_today, $current_time;
 
-$numer = serial();
+$numer = serial($dt);
 
 $coun = count($numer);
 
@@ -579,11 +597,20 @@ $coun = count($numer);
 	else
 	{
 echo "<br>";
-echo "сегодня $date_today  $current_time зафиксировано " . ( $coun + 1 ) . " серий";
+
+if ( $dt == $date_today )
+{
+echo "$dt  $current_time зафиксировано " . ( $coun + 1 ) . " серий";
 echo "<br>";
+}
+	else
+		{
+			echo "$dt было зафиксировано " . ( $coun + 1 ) . " серий";
+			echo "<br>";
+		}
 	}
 }
-
+/*
 function calendar()
 {
 echo "<html>";
@@ -616,6 +643,7 @@ function test_cal($d)
 	echo "<br>";
 	echo $d;
 }
+*/
 //точка входа в программу-----------------------------------------------------------------------------------
 
 
@@ -646,8 +674,10 @@ serial_show($_POST['item'], $_POST['mydate']);
 
 
 	else{
-			items_of_serial();
-	$dt = $date_today;		
+
+$dt = $date_today;
+			items_of_serial($dt);
+		
 
 			print_serial_select();
 //			calendar();
@@ -657,7 +687,7 @@ serial_show($_POST['item'], $_POST['mydate']);
 				{
 						echo "в папке " . info_folder($dt) . " элементов jpg";
 						meta_file($dt);
-						serial_show(3,$date_today);
+						serial_show(3,$dt);
 
 				}
 					else
