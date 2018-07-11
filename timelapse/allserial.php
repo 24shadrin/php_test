@@ -1,10 +1,12 @@
 <?php
 echo '<link rel="stylesheet" href="css/foundation.css" /> ';
-global $path, $spath;
-$date_today = date("Y-m-d");
+//global $path, $spath;
+//$date_today = date("Y-m-d");
 
-$path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
-$spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
+$dt = $_POST[date_path];
+
+$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
+$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
 
 //$path = '/home/pi/beward/penta/test/beward_penta/1/';
 //$spath = 'http://192.168.1.200/pi/test/beward_penta/1/';
