@@ -9,16 +9,18 @@ $current_time = date("H:i:s");
 //$date_today = "2018-01-20";
 
 $path = '/home/pi/beward/penta/' . $date_today . '/beward_penta/1/';
-$spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
+//$spath = 'http://192.168.1.200/pi/' . $date_today . '/beward_penta/1/';
 $back_url = '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
 
 //$path = '/home/pi/beward/penta/test/beward_penta/1/';
 //$spath = 'http://192.168.1.200/pi/test/beward_penta/1/';
 
-function search_files()
+function search_files($dt)
 //ищет файлы в целевой папке, возвращает массив с файлами
 {
-global $path, $spath;
+//global $path, $spath;
+$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
+$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
 
 foreach (glob($path . '*.jpg') as $value)
 {
@@ -53,12 +55,12 @@ echo "</select>";
 echo "</form>";
 }
 
-function info_folder()
+function info_folder($dt)
 {
 
 //подсчитывает кол-во элементов в целевой папке
 
-$files = search_files();
+$files = search_files($dt);
 $x = count($files);
 return $x;
 
@@ -116,7 +118,7 @@ echo $back_url;
 }
 
 
-function meta_file()
+function meta_file($dt)
 {
 //выдает статистику по целевой папке имя и время старшего файла и картинку самого файла
 global $path, $spath;
@@ -129,7 +131,7 @@ echo "<br>";
 			if ( info_folder() > 0)
 				
 {
-$files = search_files();
+$files = search_files($dt);
 
 
 
@@ -262,18 +264,43 @@ echo "<option value='30'> 30 </option>";
 echo "<option value='0'> все </option>";
 
 
-echo '<input type="submit" class="button" value="применить" />';
+//echo '<input type="submit" class="button" value="применить" />';
 echo "</select>";
+//echo "</form>";
+
+echo "<html>";
+echo "<head>";
+echo "<title></title>";
+echo '<link rel="stylesheet" href="uikit/css/uikit.min.css" />';
+echo '<link rel="stylesheet" href="uikit/css/components/datepicker.min.css" />';
+echo '<script src="uikit/jquery.js"></script>';
+echo '<script src="uikit/js/uikit.min.js"></script>';
+echo '<script src="uikit/js/components/datepicker.js"></script>';
+echo '<script src="uikit/js/components/form-select.js"></script>';
+echo "</head>";
+
+
+echo '<form class="uk-form">';
+//echo '<input type="text"' . 'data-uk-datepicker=' . "{format:" . "'DD.MM.YYYY'}" . ">";
+echo '<input type="text"' . "name='mydate'" . 'data-uk-datepicker=' . "{format:" . "'YYYY-MM-DD'}" . ">";
+//echo ""<input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}">"";
+echo '<input type="submit" class="button" value="применить" />';
 echo "</form>";
+
+echo "</html";
+
+
+
 }
 
-function serial()
+function serial($dt)
 {
 //функция делит фотографии на серии, возвращает массив в котором храним индексы где разница менжду файлами более 5 секунд
 
-	global $path, $spath;
-
-	$files = search_files();
+//	global $path, $spath;
+	$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
+	$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
+	$files = search_files($dt);
 	
 	
 	foreach($files as $value)
@@ -322,10 +349,15 @@ $coun = 0;
 return $numer;
 }	
 
-function show_img_html($show_mas)
+function show_img_html($show_mas, $dt)
 {
 //функция выводит массив с картинками.
-	global $path, $spath, $back_url;
+	global $back_url;
+//	$path, $spath, $back_url;
+	
+	$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
+	$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
+	
 //var_dump($show_mas);
 //echo $back_url;
 	foreach($show_mas as $value)
@@ -341,18 +373,24 @@ function show_img_html($show_mas)
 }	
 
 
-function serial_show($items)
+function serial_show($items,$dt)
 {
 //функция выводит по 5 картинок из количества items серий за текущий день.
 
-global $path, $spath, $back_url;
+global  $back_url;
+
+$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
+$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
+
+//echo $path;
+
 #мыссив с индексами где разница между файлами более 5 секунд
-$numer = serial();
+$numer = serial($dt);
 //var_dump($numer);
 #количество серий
 $coun = count($numer);
 
-$f_name = search_files();
+$f_name = search_files($dt);
 	if ((count($f_name)) > 0 )
 //	if ((count($numer)) > 0 )
 	{
@@ -452,7 +490,7 @@ echo "</form>";
 		
 //выводим на экран нашу серию картинок. Здесь можно сделать функцию. Так как эта конструкция часто используется
 
-show_img_html($show_current);
+show_img_html($show_current,$dt);
 
 
 
@@ -561,7 +599,8 @@ echo "</head>";
 
 
 echo '<form class="uk-form">';
-echo '<input type="text"' . 'data-uk-datepicker=' . "{format:" . "'DD.MM.YYYY'}" . ">";
+//echo '<input type="text"' . 'data-uk-datepicker=' . "{format:" . "'DD.MM.YYYY'}" . ">";
+echo '<input type="text"' . "name='mydate'" . 'data-uk-datepicker=' . "{format:" . "'YYYY-MM-DD'}" . ">";
 //echo ""<input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}">"";
 echo '<input type="submit" class="button" value="применить" />';
 echo "</form>";
@@ -569,49 +608,63 @@ echo "</form>";
 echo "</html";
 
 }
+
+function test_cal($d)
+{
+	
+	echo "TEST";
+	echo "<br>";
+	echo $d;
+}
 //точка входа в программу-----------------------------------------------------------------------------------
 
-//echo '<link rel="stylesheet" href="css/foundation.css" /> ';
+
 echo '<link rel="stylesheet" href="css/foundation.css" /> ';
 
-//echo '<a role="button" aria-label="submit form" href="#" class="button">Submit</a>';
-/*
-if (isset($_POST['limit']))
-{
-//	show_picture($_POST['limit']);
-//	show_pic($_POST['limit']);
-//serial_show($_POST['limit']);
-}
 
-else 
-*/	
+/*
+if (isset($_GET['mydate']))
+{
+	$ddd = ($_GET['mydate']);
+
+	echo "<br>";
+	test_cal($ddd);
+}
+*/
+
+
 if (isset($_POST['item']))
 {
-//	show_pic_time($_POST['item']);
-	serial_show($_POST['item']);
-//	calendar();
+
+
+
+
+serial_show($_POST['item'], $_POST['mydate']);
+
 }
+
+
 
 	else{
 			items_of_serial();
-			
-//print_form();
-//print_form_time();
+	$dt = $date_today;		
+
 			print_serial_select();
-				if ( info_folder() > 0 )
+//			calendar();
+			echo "<br>";
+
+				if ( info_folder($dt) > 0 )
 				{
-						echo "в папке " . info_folder() . " элементов jpg";
-						meta_file();
-						serial_show(3);
-//						calendar();
+						echo "в папке " . info_folder($dt) . " элементов jpg";
+						meta_file($dt);
+						serial_show(3,$date_today);
+
 				}
 					else
 						{
 							echo "в папке нет элементов jpg или что-то пошло не так";
 						}
-//meta_file();
 
-//serial_show(1);
 
 		}
 
