@@ -1,7 +1,5 @@
 <?php
-//создаем timelapse
-
-//include allserial.php;
+//Вывод картинок по требованию с ftp сервера
 
 //глобальные переменные
 $date_today = date("Y-m-d");
@@ -38,6 +36,7 @@ return $files;
 
 }
 
+/*
 function print_form()
 {
 echo "<p class='text-cente' >привет. Для вас доступно. </p>";
@@ -54,6 +53,7 @@ echo '<input type="submit" class="button" value="применить" />';
 echo "</select>";
 echo "</form>";
 }
+*/
 
 function info_folder($dt)
 {
@@ -66,6 +66,8 @@ return $x;
 
 
 }
+
+/*
 
 function show_pic($lim)
 {
@@ -117,7 +119,9 @@ echo $back_url;
 }
 }
 
+*/
 
+/*
 function meta_file($dt)
 {
 //выдает статистику по целевой папке имя и время старшего файла и картинку самого файла
@@ -164,6 +168,7 @@ echo  "<br>";
 
 }
 }
+*/
 /*
 function show_pic_time($tm)
 {
@@ -227,7 +232,7 @@ echo $back_url;
 	}
 	
 */
-
+/*
 function print_form_time()
 {
 echo "показать за последние ";
@@ -248,7 +253,7 @@ echo '<input type="submit" class="button" value="применить" />';
 echo "</select>";
 echo "</form>";
 }
-
+*/
 function print_serial_select()
 {
 echo "выбирите количество серий для отображения ";
@@ -268,7 +273,7 @@ echo "<option value='0'> все </option>";
 //echo '<input type="submit" class="button" value="применить" />';
 echo "</select>";
 //echo "</form>";
-
+echo "выбирите дату, если дата не выбрана покажу текущий день ";
 echo "<html>";
 echo "<head>";
 echo "<title></title>";
@@ -296,7 +301,7 @@ echo "</html";
 
 function serial($dt)
 {
-//функция делит фотографии на серии, возвращает массив в котором храним индексы где разница менжду файлами более 5 секунд
+//функция делит фотографии на серии, возвращает массив в котором храним индексы где разница менжду файлами более 20 секунд
 
 //	global $path, $spath;
 global $date_today;
@@ -324,16 +329,11 @@ if ( $dt == 0 )
 $i_max = count($md);
 $j_max = count($f_name);
 
-//echo "количество элементов в массивах файлов и их размеров";
-//echo "<br>";
-//echo $i_max;
-//echo "<br>";
-//echo $j_max;
-//echo "<br>";
+
 
 $coun = 0;
 
-//ходим циклом по массиву с датой запоминаем индексы где разница между датой больше 10 секунд
+//ходим циклом по массиву с датой запоминаем индексы где разница между датой больше 20 секунд
 		for($i=0; $i < $i_max; $i++)
 		{
 			if (($md[$i] - $md[$i+1]) > -20 ) 
@@ -419,7 +419,7 @@ $f_name = search_files($dt);
 
 // Этот большой цикл выводит по 5 картинок из каждой серии
 
-//for ($seriya=0; $seriya <= $coun; $seriya++)
+
 // Если items нулевой то выводим весь день.		
 	if ( $items==0 ) 
 	{
@@ -558,8 +558,8 @@ if ( $items !=3)
 else 
 	{ 
 	echo "<br>";
-	echo "серий не обнаружено или что-то пошло не так.";
-	echo "<br>";
+//	echo "серий не обнаружено или что-то пошло не так.";
+//	echo "<br>";
 	echo $back_url;
 	}
 
@@ -582,7 +582,7 @@ global $path, $spath;
 function items_of_serial($dt)
 {
 //функция выводит информацию сколько зафиксирована серий. 
-global $date_today, $current_time;
+global $date_today, $current_time, $back_url;
 
 $numer = serial($dt);
 
@@ -591,21 +591,23 @@ $coun = count($numer);
 	if ( $coun == 0 ) 
 	{
 		echo "<br>";
-		echo "Сегодня $date_today  $current_time серий не обнаружено ";
+		echo "$dt серий не обнаружено или что-то пошло не так ";
 		echo "<br>";
+		
+		
 	}
 	else
 	{
 echo "<br>";
 
-if ( $dt == $date_today )
+if ( $dt == 0 )
 {
-echo "$dt  $current_time зафиксировано " . ( $coun + 1 ) . " серий";
+echo "сегодня " . $dt . " на " . $current_time . " зафиксировано " . ( $coun + 1 ) . " серий";
 echo "<br>";
 }
 	else
 		{
-			echo "$dt было зафиксировано " . ( $coun + 1 ) . " серий";
+			echo $dt . " было зафиксировано " . ( $coun + 1 ) . " серий";
 			echo "<br>";
 		}
 	}
@@ -676,7 +678,7 @@ serial_show($_POST['item'], $_POST['mydate']);
 	else{
 
 $dt = $date_today;
-			items_of_serial($dt);
+//			items_of_serial($dt);
 		
 
 			print_serial_select();
@@ -686,7 +688,7 @@ $dt = $date_today;
 				if ( info_folder($dt) > 0 )
 				{
 						echo "в папке " . info_folder($dt) . " элементов jpg";
-						meta_file($dt);
+//						meta_file($dt);
 						serial_show(3,$dt);
 
 				}
