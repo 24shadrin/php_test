@@ -368,6 +368,11 @@ function show_img_html($show_mas, $dt)
 	$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
 	$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
 	
+	if ( $dt == 0 )
+{
+$dt = $date_today;	
+}
+	
 //var_dump($show_mas);
 //echo $back_url;
 	foreach($show_mas as $value)
