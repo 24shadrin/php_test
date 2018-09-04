@@ -593,7 +593,7 @@ $numer = serial($dt);
 
 $coun = count($numer);
 
-	if ( $coun == 0 ) 
+	if ( ( $coun + 1 ) == 0 ) 
 	{
 		echo "<br>";
 		echo "$dt серий не обнаружено или что-то пошло не так ";
@@ -683,6 +683,7 @@ serial_show($_POST['item'], $_POST['mydate']);
 	else{
 
 $dt = $date_today;
+
 //			items_of_serial($dt);
 		
 
