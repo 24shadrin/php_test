@@ -592,8 +592,10 @@ global $date_today, $current_time, $back_url;
 $numer = serial($dt);
 
 $coun = count($numer);
+//сколько элементов jpg
+$coun_jpg = info_folder($dt);
 
-	if ( ( $coun + 1 ) == 0 ) 
+	if ( $coun_jpg == 0 ) 
 	{
 		echo "<br>";
 		echo "$dt серий не обнаружено или что-то пошло не так ";
