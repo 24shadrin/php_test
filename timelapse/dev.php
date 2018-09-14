@@ -697,7 +697,8 @@ else
 	
 if (isset($_POST['tl']))
 {
-	echo "ok";
+	$run = "/var/www/sm/timelapse/time_lapse.sh";
+	shell_exec ($run);
 }
 
 	else{
