@@ -589,6 +589,11 @@ function items_of_serial($dt)
 //функция выводит информацию сколько зафиксирована серий. 
 global $date_today, $current_time, $back_url;
 
+if ( $dt == 0 )
+{
+$dt = $date_today;	
+}
+
 $numer = serial($dt);
 
 $coun = count($numer);
@@ -597,6 +602,8 @@ $coun_jpg = info_folder($dt);
 
 	if ( $coun_jpg == 0 ) 
 	{
+		echo "<br>";
+		echo $coun_jpg;
 		echo "<br>";
 		echo "$dt серий не обнаружено или что-то пошло не так ";
 		echo "<br>";
@@ -618,6 +625,17 @@ echo "<br>";
 			echo "<br>";
 		}
 	}
+}
+
+function run_tl()
+{
+
+echo "<form method='post'>";
+echo "<link rel='stylesheet' href='uikit/css/uikit.min.css' />";
+echo "<link rel='stylesheet' href='uikit/css/components/datepicker.min.css' />";
+echo  "<input type='submit' class='button' value='timelapse' name='tl' />";
+echo "</form>";	
+
 }
 /*
 function calendar()
@@ -672,15 +690,15 @@ if (isset($_GET['mydate']))
 
 if (isset($_POST['item']))
 {
-
-
-
-
 serial_show($_POST['item'], $_POST['mydate']);
-
 }
 
-
+else 
+	
+if (isset($_POST['tl']))
+{
+	echo "ok";
+}
 
 	else{
 
@@ -698,6 +716,7 @@ $dt = $date_today;
 						echo "в папке " . info_folder($dt) . " элементов jpg";
 //						meta_file($dt);
 						serial_show(3,$dt);
+						run_tl();
 
 				}
 					else
