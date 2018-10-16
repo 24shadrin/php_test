@@ -36,24 +36,6 @@ return $files;
 
 }
 
-/*
-function print_form()
-{
-echo "<p class='text-cente' >привет. Для вас доступно. </p>";
-
-echo '<form action="dev.php" method="post">';
-echo "<p> сколько показать? </p>";
-echo "<select name='limit'>";
-echo "<option value='5'> 5 </option>";
-echo "<option value='6'> 6 </option>";
-echo "<option value='10'> 10 </option>";
-echo "<option value='15'> 15 </option>";
-echo "<option value='all'> все </option>";
-echo '<input type="submit" class="button" value="применить" />';
-echo "</select>";
-echo "</form>";
-}
-*/
 
 function info_folder($dt)
 {
@@ -67,193 +49,7 @@ return $x;
 
 }
 
-/*
 
-function show_pic($lim)
-{
-//показывает выбранное количество файлов
-
-global $path, $spath;
-$back_url = '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
-
-
-if ( info_folder() > 0 )
-{
-$files = search_files();
-
-
-echo $back_url;
-echo "<br>";
-
-$file_count = info_folder();
-if ( $file_count > $lim )
-{
-				for($i = 0; $i < $lim; $i++)
-				{	
-		if (( $i < $file_count  ) && ($lim < $file_count))
-					{			
-						$picture = $spath . $files[$i + ($file_count - $lim) ];
-						echo "<img src='$picture' width=24% />";
-					}	
-				}
-}		
-	else 
-		{
-			for($i = 0; $i < $file_count; $i++)
-				{	
-						$picture = $spath . $files[$i];
-						echo "<img src='$picture' width=24% />";
-				}
-			
-		}
-				
-echo "<br>";
-echo $back_url;
-
-}
-	else 
-{
-	echo "нет файлов или что-то пошло не так";
-echo "<br>";
-echo $back_url;
-}
-}
-
-*/
-
-/*
-function meta_file($dt)
-{
-//выдает статистику по целевой папке имя и время старшего файла и картинку самого файла
-global $path, $spath;
-
-//$meta = date("F d Y H:i:s", filectime($path  .  $name));
-
-echo "<br>";
-
-			
-			if ( info_folder() > 0)
-				
-{
-$files = search_files($dt);
-
-
-
-	foreach($files as $value)
-		{
-
-			$meta[filemtime($path . $value )] = $value;
-			
-		}
-
-ksort($meta);
-
-		foreach($meta as $key => $value)
-		{
-			$file_meta = $key;
-			$file_name = $value;
-		}
-
-//echo "время старшего файла " . $file_meta;
-echo "<br>";
-//echo "имя старшего файла " .$file_name;
-//echo "<br>";
-$f_meta = date("d m Y H:i:s", $file_meta);
-echo "крайнее движение ".  $f_meta;
-//echo  "<br>";
-//echo  "<br>";
-$picture = $spath . $file_name;
-//echo "<img src='$picture' width=24% />";
-echo  "<br>";
-
-}
-}
-*/
-/*
-function show_pic_time($tm)
-{
-// выводит файла за интервал времени
-
-global $path, $spath;
-
-$back_url = '<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
-		if ( info_folder() > 0)
-	{
-$files = search_files();
-
-echo $back_url;
-echo "<br>";
-foreach($files as $value)
-		{
-			$meta[filectime($path . $value )] = $value;
-			
-		}
-		ksort($meta);
-
-$cur_time = time();
-
-foreach($meta as $key => $value)
-		{
-			if ( ($cur_time - $key) < $tm)
-			{
-				$picture = $spath . $value;
-				echo "<img src='$picture' width=24% />";
-				
-
-				$a = 0;
-			}
-
-				if ( ($cur_time - $key) > $tm)
-				{
-					$a = 1;
-				}
-		}		
-			if ($a !=0)
-			{
-			echo "за выбранный интервал файлов нет";
-		echo "<br>";
-		echo $back_url;
-			
-			}
-			else 
-					{		
-					echo "<br>";
-					echo $back_url;
-					
-					}
-
-		}	
-		else 
-		{
-echo "нет файлов или что-то пошло не так";
-echo "<br>";
-echo $back_url;		
-		}
-	}
-	
-*/
-/*
-function print_form_time()
-{
-echo "показать за последние ";
-
-echo '<form  action="dev.php" method="post" >';
-
-echo "<select name='item' >";
-echo "<option value='300'> 5 минут </option>";
-echo "<option value='900'> 15 минут </option>";
-echo "<option value='1800'> 30 минут </option>";
-echo "<option value='3600'> 1 час </option>";
-echo "<option value='7200'> 2 часа </option>";
-echo "<option value='10800'> 3 часа </option>";
-echo "<option value='21600'> 6 часов </option>";
-
-
-echo '<input type="submit" class="button" value="применить" />';
-echo "</select>";
-echo "</form>";
-}
-*/
 function print_serial_select()
 {
 echo "выбирите количество серий для отображения ";
@@ -433,7 +229,8 @@ $f_name = search_files($dt);
 	else {
 $m_serial = ( $coun - $items + 1 );
 		}
-//$m_serial = 0;
+
+
 if ( $m_serial < 0 ) 
 {
 	$m_serial = 0;
@@ -677,15 +474,7 @@ function test_cal($d)
 echo '<link rel="stylesheet" href="css/foundation.css" /> ';
 
 
-/*
-if (isset($_GET['mydate']))
-{
-	$ddd = ($_GET['mydate']);
 
-	echo "<br>";
-	test_cal($ddd);
-}
-*/
 
 
 if (isset($_POST['item']))
