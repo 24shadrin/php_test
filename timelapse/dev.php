@@ -393,7 +393,7 @@ function serial_show($items,$dt)
 	items_of_serial($dt);
 //функция выводит по 5 картинок из количества items серий за текущий день.
 
-global  $back_url, $date_today;
+global  $back_url,$date_today;
 
 $path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
@@ -433,7 +433,7 @@ $f_name = search_files($dt);
 	else {
 $m_serial = ( $coun - $items + 1 );
 		}
-$m_serial = 0;
+//$m_serial = 0;
 if ( $m_serial < 0 ) 
 {
 	$m_serial = 0;
