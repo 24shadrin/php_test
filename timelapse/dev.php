@@ -393,7 +393,7 @@ function serial_show($items,$dt)
 	items_of_serial($dt);
 //функция выводит по 5 картинок из количества items серий за текущий день.
 
-global  $back_url,$date_today;
+global  $back_url, $date_today;
 
 $path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
 $spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
@@ -433,7 +433,7 @@ $f_name = search_files($dt);
 	else {
 $m_serial = ( $coun - $items + 1 );
 		}
-//$m_serial = 0;
+$m_serial = 0;
 if ( $m_serial < 0 ) 
 {
 	$m_serial = 0;
@@ -510,7 +510,7 @@ echo "</form>";
 				$show_current[3] =  $current_serial[$mediana+3];
 				$show_current[4] =  $current_serial[$mediana+5];
 		
-//выводим на экран нашу серию картинок. Здесь можно сделать функцию. Так как эта конструкция часто используется
+//выводим на экран нашу серию картинок.
 
 show_img_html($show_current,$dt);
 
@@ -697,14 +697,34 @@ else
 	
 if (isset($_POST['tl']))
 {
-	$run = "/var/www/sm/timelapse/time_lapse.sh";
+	$run = "/var/www/sm/timelapse/time_lapse_exe_box.sh";
 	shell_exec ($run);
+	$dt = $date_today;
+	echo "OK";
+	echo "<br>";
+	$url="http://192.168.1.200/pi/" . $dt . "/beward_penta/1/timelapse.avi";
+	echo "<a href=$url> ссылка на avi</a>";
+	
+	
+//	echo "<video>";
+
+	//	echo '<source src="/home/pi/beward/penta/test/beward_penta/1/test.avi">';
+//	echo '<http://192.168.1.200/pi/' . 'test' . '/beward_penta/1/test.mp4>';
+//	<a class="button" href="http://192.168.1.200/sm/timelapse/dev.php">back</a>';
+//echo '<source src="123.ogv" type="video/ogg; codecs="theora, vorbis"">';
+//echo '<source src="test.mp4" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"">';
+//echo '<source src="/home/pi/beward/penta/test/beward_penta/1/test.mp4"; codecs="avc1.42E01E, mp4a.40.2">';
+//echo  '<source src="123.webm" type="video/webm; codecs="vp8, vorbis"">';
+//echo "Тег video не поддерживается вашим браузером. ";
+//echo '<a href="video/duel.mp4">Скачайте видео</a>';
+//	echo "</video>";
+	
 }
 
 	else{
 
 $dt = $date_today;
-
+//$dt = "test";
 //			items_of_serial($dt);
 		
 
