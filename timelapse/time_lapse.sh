@@ -11,7 +11,8 @@ pr=`ps aux |grep "time_lapse.sh" |grep "/bin/bash" | wc -l`
 
 if [ $pr -gt 2 ]; then
     {
-    echo "time lapse alredy running. Please wait and try again later"
+#    echo "time lapse alredy running. Please wait and try again later"
+    exit 2
     }
 else
 {
@@ -37,9 +38,13 @@ code_avconv=$?
 
     let "total = code_cp + code_cd + code_rename + code_avconv"
 if [ $total -eq 0 ]; then
-    echo "everything is OK"
+#    echo "everything is OK"
+#    echo 0
+    exit 0
 else
-    echo "something went wrong"
+#    echo "something went wrong"
+#    echo 1
+    exit 1
 fi
 echo $total
 }
