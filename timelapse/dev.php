@@ -487,11 +487,32 @@ else
 if (isset($_POST['tl']))
 {
 	$run = "/var/www/sm/timelapse/time_lapse_exe_box.sh";
-	shell_exec ($run);
+//	$mess=shell_exec ($run);
+$mess=system($run, $exit_code);
+
 	$dt = $date_today;
-	echo "OK";
+//	echo "OK";
 	echo "<br>";
+//	echo $mess;
+	echo "<br>";
+//	echo "код возврата " . $exit_code;
+		if ( $exit_code == 0 ) 
+		{
+			echo "склейка файлов завершена успешно";
+		}
+		else
+			if ( $exit_code == 2 )
+		{
+			echo "процесс склейки файлов уже запущен!";
+			exit;
+		}
+		else 
+		{
+			echo "что-то пошло не так, попробуйте позже";
+		}
+		
 	$url="http://192.168.1.200/pi/" . $dt . "/beward_penta/1/timelapse.avi";
+	echo "<br>";
 	echo "<a href=$url> ссылка на avi</a>";
 	
 	
