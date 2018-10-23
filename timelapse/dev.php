@@ -434,40 +434,7 @@ echo  "<input type='submit' class='button' value='timelapse' name='tl' />";
 echo "</form>";	
 
 }
-/*
-function calendar()
-{
-echo "<html>";
-echo "<head>";
-echo "<title></title>";
-echo '<link rel="stylesheet" href="uikit/css/uikit.min.css" />';
-echo '<link rel="stylesheet" href="uikit/css/components/datepicker.min.css" />';
-echo '<script src="uikit/jquery.js"></script>';
-echo '<script src="uikit/js/uikit.min.js"></script>';
-echo '<script src="uikit/js/components/datepicker.js"></script>';
-echo '<script src="uikit/js/components/form-select.js"></script>';
-echo "</head>";
 
-
-echo '<form class="uk-form">';
-//echo '<input type="text"' . 'data-uk-datepicker=' . "{format:" . "'DD.MM.YYYY'}" . ">";
-echo '<input type="text"' . "name='mydate'" . 'data-uk-datepicker=' . "{format:" . "'YYYY-MM-DD'}" . ">";
-//echo ""<input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}">"";
-echo '<input type="submit" class="button" value="применить" />';
-echo "</form>";
-
-echo "</html";
-
-}
-
-function test_cal($d)
-{
-	
-	echo "TEST";
-	echo "<br>";
-	echo $d;
-}
-*/
 //точка входа в программу-----------------------------------------------------------------------------------
 
 
@@ -512,8 +479,16 @@ $mess=system($run, $exit_code);
 		}
 		
 	$url="http://192.168.1.200/pi/" . $dt . "/beward_penta/1/timelapse.avi";
+	
 	echo "<br>";
-	echo "<a href=$url> ссылка на avi</a>";
+	$last=end(search_files($dt));
+	$url_last="http://192.168.1.200/pi/" . $dt . "/beward_penta/1/" . $last;
+//	echo $url_last;
+	echo "<a href=$url> <img src=$url_last width=50%></a>";
+	echo "<br>";
+	echo "<br>";
+	
+	echo $back_url;
 	
 	
 //	echo "<video>";
@@ -548,6 +523,7 @@ $dt = $date_today;
 //						meta_file($dt);
 						serial_show(3,$dt);
 						run_tl();
+//						var_dump(search_files($dt));
 
 				}
 					else
