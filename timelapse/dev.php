@@ -360,8 +360,7 @@ if ( $items !=3)
 else 
 	{ 
 	echo "<br>";
-//	echo "серий не обнаружено или что-то пошло не так.";
-//	echo "<br>";
+
 	echo $back_url;
 	}
 
@@ -400,7 +399,6 @@ $coun_jpg = info_folder($dt);
 	if ( $coun_jpg == 0 ) 
 	{
 		echo "<br>";
-		echo $coun_jpg;
 		echo "<br>";
 		echo "$dt серий не обнаружено или что-то пошло не так ";
 		echo "<br>";
@@ -484,7 +482,7 @@ $mess=system($run, $exit_code);
 	$last=end(search_files($dt));
 	$url_last="http://192.168.1.200/pi/" . $dt . "/beward_penta/1/" . $last;
 //	echo $url_last;
-	echo "<a href=$url> <img src=$url_last width=50%></a>";
+	echo "<a href=$url> <img src=$url_last width=20% /></a>";
 	echo "<br>";
 	echo "<br>";
 	
@@ -523,7 +521,7 @@ $dt = $date_today;
 //						meta_file($dt);
 						serial_show(3,$dt);
 						run_tl();
-//						var_dump(search_files($dt));
+
 
 				}
 					else
