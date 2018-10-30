@@ -52,44 +52,44 @@ return $x;
 
 function print_serial_select()
 {
-echo "выбирите количество серий для отображения ";
+echo "выбирите количество серий для отображения \n";
 
-echo '<form  action="dev.php" method="post" >';
+echo "<form  action='dev.php' method='post' >\n";
 
-echo "<select name='item' >";
-echo "<option value='5'> 5 </option>";
-echo "<option value='10'> 10 </option>";
-echo "<option value='15'> 15 </option>";
-echo "<option value='20'> 20 </option>";
-echo "<option value='25'> 25 </option>";
-echo "<option value='30'> 30 </option>";
-echo "<option value='0'> все </option>";
+echo "<select name='item' >\n";
+echo "<option value='5'> 5 </option>\n";
+echo "<option value='10'> 10 </option>\n";
+echo "<option value='15'> 15 </option>\n";
+echo "<option value='20'> 20 </option>\n";
+echo "<option value='25'> 25 </option>\n";
+echo "<option value='30'> 30 </option>\n";
+echo "<option value='0'> все </option>\n";
 
 
 //echo '<input type="submit" class="button" value="применить" />';
-echo "</select>";
+echo "</select>\n";
 //echo "</form>";
-echo "выбирите дату, если дата не выбрана покажу текущий день ";
-echo "<html>";
-echo "<head>";
-echo "<title></title>";
-echo '<link rel="stylesheet" href="uikit/css/uikit.min.css" />';
-echo '<link rel="stylesheet" href="uikit/css/components/datepicker.min.css" />';
-echo '<script src="uikit/jquery.js"></script>';
-echo '<script src="uikit/js/uikit.min.js"></script>';
-echo '<script src="uikit/js/components/datepicker.js"></script>';
-echo '<script src="uikit/js/components/form-select.js"></script>';
-echo "</head>";
+echo "выбирите дату, если дата не выбрана покажу текущий день \n";
+echo "<html>\n";
+echo "<head>\n";
+echo "<title></title>\n";
+echo "<link rel='stylesheet' href='uikit/css/uikit.min.css' />\n";
+echo "<link rel='stylesheet' href='uikit/css/components/datepicker.min.css' />\n";
+echo "<script src='uikit/jquery.js'></script>\n";
+echo "<script src='uikit/js/uikit.min.js'></script>\n";
+echo "<script src='uikit/js/components/datepicker.js'></script>\n";
+echo "<script src='uikit/js/components/form-select.js'></script>\n";
+echo "</head>\n";
 
 
-echo '<form class="uk-form">';
+echo "<form class='uk-form'>\n";
 //echo '<input type="text"' . 'data-uk-datepicker=' . "{format:" . "'DD.MM.YYYY'}" . ">";
 echo '<input type="text"' . "name='mydate'" . 'data-uk-datepicker=' . "{format:" . "'YYYY-MM-DD'}" . ">";
 //echo ""<input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}">"";
 echo '<input type="submit" class="button" value="применить" />';
-echo "</form>";
+echo "</form>\n";
 
-echo "</html";
+echo "</html\n";
 
 
 
@@ -169,8 +169,7 @@ function show_img_html($show_mas, $dt)
 $dt = $date_today;	
 }
 	
-//var_dump($show_mas);
-//echo $back_url;
+
 	foreach($show_mas as $value)
 	
 	{
@@ -180,7 +179,7 @@ $dt = $date_today;
 	}
 	echo "<br>";
 	echo "<br>";
-//echo $back_url;
+
 }	
 
 
@@ -199,7 +198,7 @@ if ( $dt == 0 )
 $dt = $date_today;	
 }
 
-//echo $path;
+
 
 #мыссив с индексами где разница между файлами более 5 секунд
 $numer = serial($dt);
@@ -209,12 +208,10 @@ $coun = count($numer);
 
 $f_name = search_files($dt);
 	if ((count($f_name)) > 0 )
-//	if ((count($numer)) > 0 )
+
 	{
 
-//echo "<br>";
-//echo "сегодня зафиксировано " . ( $coun + 1 ) . " серий";
-//echo "<br>";
+
 
 
 
@@ -333,7 +330,7 @@ show_img_html($show_current,$dt);
 							
 //							echo $value . "<br>";
 
-							echo "<img src='$picture' width=20% />";
+							echo "<img src='$picture' width=20% />\n";
 												}	
 						}
 						echo "<br>";
@@ -368,17 +365,7 @@ else
 
 
 }
-/*
-function full_serial($mas_serial)
-{
-global $path, $spath;
-	foreach($mas_serial as $value)
-	{
-		$picture = $spath . $value;
-		echo "<img src='$picture' width=20% />";
-	}
-}
-*/
+
 
 function items_of_serial($dt)
 {
@@ -398,10 +385,10 @@ $coun_jpg = info_folder($dt);
 
 	if ( $coun_jpg == 0 ) 
 	{
-		echo "<br>";
-		echo "<br>";
-		echo "$dt серий не обнаружено или что-то пошло не так ";
-		echo "<br>";
+		echo "<br>\n";
+		echo "<br>\n";
+		echo "$dt серий не обнаружено или что-то пошло не так \n";
+		echo "<br>\n";
 		
 		
 	}
@@ -411,12 +398,12 @@ echo "<br>";
 
 if ( $dt == 0 )
 {
-echo "сегодня " . $dt . " на " . $current_time . " зафиксировано " . ( $coun + 1 ) . " серий";
+echo "сегодня " . $dt . " на " . $current_time . " зафиксировано " . ( $coun + 1 ) . " серий\n";
 echo "<br>";
 }
 	else
 		{
-			echo $dt . " было зафиксировано " . ( $coun + 1 ) . " серий";
+			echo $dt . " было зафиксировано " . ( $coun + 1 ) . " серий\n";
 			echo "<br>";
 		}
 	}
@@ -425,18 +412,18 @@ echo "<br>";
 function run_tl()
 {
 
-echo "<form method='post'>";
-echo "<link rel='stylesheet' href='uikit/css/uikit.min.css' />";
-echo "<link rel='stylesheet' href='uikit/css/components/datepicker.min.css' />";
-echo  "<input type='submit' class='button' value='timelapse' name='tl' />";
-echo "</form>";	
+echo "<form method='post'>\n";
+echo "<link rel='stylesheet' href='uikit/css/uikit.min.css' />\n";
+echo "<link rel='stylesheet' href='uikit/css/components/datepicker.min.css' />\n";
+echo  "<input type='submit' class='button' value='timelapse' name='tl' />\n";
+echo "</form>\n";	
 
 }
 
 //точка входа в программу-----------------------------------------------------------------------------------
 
 
-echo '<link rel="stylesheet" href="css/foundation.css" /> ';
+echo "<link rel='stylesheet' href='css/foundation.css' /> \n";
 
 
 
@@ -457,23 +444,23 @@ $mess=system($run, $exit_code);
 
 	$dt = $date_today;
 //	echo "OK";
-	echo "<br>";
+	echo "<br>\n";
 //	echo $mess;
-	echo "<br>";
+	echo "<br>\n";
 //	echo "код возврата " . $exit_code;
 		if ( $exit_code == 0 ) 
 		{
-			echo "склейка файлов завершена успешно";
+			echo "склейка файлов завершена успешно\n";
 		}
 		else
 			if ( $exit_code == 2 )
 		{
-			echo "процесс склейки файлов уже запущен!";
+			echo "процесс склейки файлов уже запущен!\n";
 			exit;
 		}
 		else 
 		{
-			echo "что-то пошло не так, попробуйте позже";
+			echo "что-то пошло не так, попробуйте позже\n";
 		}
 		
 	$url="http://192.168.1.200/pi/" . $dt . "/beward_penta/1/timelapse.avi";
@@ -482,9 +469,9 @@ $mess=system($run, $exit_code);
 	$last=end(search_files($dt));
 	$url_last="http://192.168.1.200/pi/" . $dt . "/beward_penta/1/" . $last;
 //	echo $url_last;
-	echo "<a href=$url> <img src=$url_last width=20% /></a>";
-	echo "<br>";
-	echo "<br>";
+	echo "<a href=$url> <img src=$url_last width=20% /></a>\n";
+	echo "<br>\n";
+	echo "<br>\n";
 	
 	echo $back_url;
 	
@@ -517,7 +504,7 @@ $dt = $date_today;
 
 				if ( info_folder($dt) > 0 )
 				{
-						echo "в папке " . info_folder($dt) . " элементов jpg";
+						echo "в папке " . info_folder($dt) . " элементов jpg\n";
 //						meta_file($dt);
 						serial_show(3,$dt);
 						run_tl();
@@ -526,7 +513,7 @@ $dt = $date_today;
 				}
 					else
 						{
-							echo "в папке нет элементов jpg или что-то пошло не так";
+							echo "в папке нет элементов jpg или что-то пошло не так\n";
 						}
 
 
