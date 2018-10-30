@@ -1,5 +1,5 @@
 <?php
-echo '<link rel="stylesheet" href="css/foundation.css" /> ';
+echo "<link rel='stylesheet' href='css/foundation.css' /> \n";
 //global $path, $spath;
 //$date_today = date("Y-m-d");
 
@@ -16,14 +16,14 @@ $back_url = '<a class=button href="http://192.168.1.200/sm/timelapse/dev.php">ba
 $massiv = $_POST[mass];
 
 echo $back_url;
-echo "<br>";
+echo "<br>\n";
 foreach($massiv as $value)
 	
 	{
 		$picture = $spath . $value;
 		echo "<img src='$picture' width=20% />";
 	}
-echo "<br>";
+echo "<br>\n";
 echo $back_url;
 
 ?>
