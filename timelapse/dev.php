@@ -158,21 +158,28 @@ return $numer;
 function show_img_html($show_mas, $dt)
 {
 //функция выводит массив с картинками.
+	global $date_today;
 	global $back_url;
 //	$path, $spath, $back_url;
-	
-	$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
-	$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
-	
+
 	if ( $dt == 0 )
 {
 $dt = $date_today;	
 }
 	
+	$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
+	$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
+/*	
+	if ( $dt == 0 )
+{
+$dt = $date_today;	
+}
+*/	
 
 	foreach($show_mas as $value)
 	
 	{
+//		echo "test";
 		$picture = $spath . $value;
 		echo "<img src='$picture' width=20% />";
 		
@@ -190,14 +197,14 @@ function serial_show($items,$dt)
 
 global  $back_url,$date_today;
 
-$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
-$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
-
 if ( $dt == 0 )
 {
 $dt = $date_today;	
 }
 
+
+$path = '/home/pi/beward/penta/' . $dt . '/beward_penta/1/';
+$spath = 'http://192.168.1.200/pi/' . $dt . '/beward_penta/1/';
 
 
 #мыссив с индексами где разница между файлами более 5 секунд
